@@ -52,7 +52,7 @@ public final class NotificationUtils {
 
 
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context, channelId)
-                .setSmallIcon(R.drawable.ic_stat_my)
+                .setSmallIcon(R.drawable.ic_pushpinblack1)
                 .setContentTitle(randomEmoji())
                 .setOngoing(true)
                 .setAutoCancel(false)
@@ -85,10 +85,10 @@ public final class NotificationUtils {
 
             mBuilder.addAction(action);
             mBuilder.setLargeIcon(BitmapFactory.decodeResource(context.getResources(),
-                    R.mipmap.n_latter));
+                    R.mipmap.pushpinsm));
         } else {
             mBuilder.setLargeIcon(BitmapFactory.decodeResource(context.getResources(),
-                    R.mipmap.ic_launcher_my));
+                    R.mipmap.ic_launcher_pin));
         }
 
 
