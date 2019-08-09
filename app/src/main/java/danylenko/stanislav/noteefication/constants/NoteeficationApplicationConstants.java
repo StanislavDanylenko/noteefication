@@ -7,6 +7,7 @@ public final class NoteeficationApplicationConstants {
     public static final String NOTIFICATION_ID = "notificationId";
     public static final String ACTION_EDIT = "com.example.edit";
     public static final String ACTION_DELETE = "com.example.cancel";
+    public static final String ACTION_COPY = "com.example.cancel";
     public static final String EDIT_TEXT = "EDIT_TEXT";
 
     public static final String NOTE_APPLICATION_CHANNEL = "NoteApplicationChannel";

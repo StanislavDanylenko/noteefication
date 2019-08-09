@@ -12,10 +12,14 @@ import android.support.v4.app.RemoteInput;
 import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.content.ContextCompat;
 
+import java.util.Random;
+
 import danylenko.stanislav.noteefication.R;
 import danylenko.stanislav.noteefication.handler.ButtonReceiver;
+import danylenko.stanislav.noteefication.handler.CopyReceiver;
 import danylenko.stanislav.noteefication.handler.EditReceiver;
 
+import static danylenko.stanislav.noteefication.constants.NoteeficationApplicationConstants.ACTION_COPY;
 import static danylenko.stanislav.noteefication.constants.NoteeficationApplicationConstants.ACTION_DELETE;
 import static danylenko.stanislav.noteefication.constants.NoteeficationApplicationConstants.ACTION_EDIT;
 import static danylenko.stanislav.noteefication.constants.NoteeficationApplicationConstants.CHANNEL_ID;
@@ -51,6 +55,12 @@ public final class NotificationUtils {
         PendingIntent btPendingIntent = PendingIntent.getBroadcast(context, id, buttonIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
 
+        Intent copyIntent = new Intent(ACTION_COPY, null, context, CopyReceiver.class);
+        copyIntent.putExtra("value", body);
+
+        PendingIntent copyPendingIntent = PendingIntent.getBroadcast(context, id, copyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context, channelId)
                 .setSmallIcon(R.drawable.ic_pushpinblack1)
                 .setContentTitle(randomEmoji())
@@ -59,6 +69,8 @@ public final class NotificationUtils {
                 .setColor(ContextCompat.getColor(context, R.color.colorBlack))
 
                 .addAction(R.drawable.ic_delete_black_24dp, DELETE, btPendingIntent)
+                .addAction(R.drawable.ic_content_copy, "COPY", copyPendingIntent)
+
                 .setStyle(new NotificationCompat.BigTextStyle()
                         .bigText(body))
                 .setContentText(body);
@@ -104,7 +116,7 @@ public final class NotificationUtils {
     }
 
     private static String randomEmoji() {
-        int position = (int) (Math.random() * (EMOJI.length + 1));
+        int position = new Random().nextInt(EMOJI.length);
         return EMOJI[position];
     }
 

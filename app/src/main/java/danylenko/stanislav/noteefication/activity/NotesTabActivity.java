@@ -2,15 +2,14 @@ package danylenko.stanislav.noteefication.activity;
 
 import android.app.NotificationManager;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Toast;
 
 import java.util.List;
-
-import android.support.design.widget.TabLayout;
 
 import danylenko.stanislav.noteefication.NoteeficationApplication;
 import danylenko.stanislav.noteefication.R;
@@ -40,13 +39,19 @@ public class NotesTabActivity extends AppCompatActivity {
 
         TabLayout tabLayout = findViewById(R.id.sliding_tabs);
         tabLayout.setupWithViewPager(viewPager);
+
+        Intent intent = getIntent();
+        int tabIndex = intent.getIntExtra("tabIndex", 0);
+
+        viewPager.setCurrentItem(tabIndex);
+
     }
 
     public void cleanHistory(View view) {
         db = NoteeficationApplication.getInstance().getDatabase();
         noteDao = db.noteDao();
         noteDao.deleteByStatus(Status.DONE.getValue());
-        Toast.makeText(this, "History was cleaned", Toast.LENGTH_LONG).show();
+        recreateActivity(1);
     }
 
     public void cleanAllCurrent(View view) {
@@ -57,9 +62,17 @@ public class NotesTabActivity extends AppCompatActivity {
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         for (Note note : actual) {
             notificationManager.cancel((int)note.id);
-            noteDao.delete(note);
+            note.status = Status.DONE;
+            noteDao.update(note);
         }
+        recreateActivity(0);
+    }
 
-        Toast.makeText(this, "Actual notes were cleaned", Toast.LENGTH_LONG).show();
+    private void recreateActivity(int tabIndex) {
+        finish();
+
+        Intent selfIntent = getIntent();
+        selfIntent.putExtra("tabIndex", tabIndex);
+        startActivity(selfIntent);
     }
 }

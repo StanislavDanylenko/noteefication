@@ -39,6 +39,12 @@
             </intent-filter>
         </receiver>
 
+        <receiver android:name=".handler.CopyReceiver">
+            <intent-filter>
+                <action android:name="com.example.copy" />
+            </intent-filter>
+        </receiver>
+
         <service
             android:name=".startup.StartupService"
             android:permission="android.permission.BIND_JOB_SERVICE" />
