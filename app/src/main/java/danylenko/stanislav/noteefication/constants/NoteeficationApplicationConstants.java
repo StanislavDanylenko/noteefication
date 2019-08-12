@@ -5,19 +5,25 @@ public final class NoteeficationApplicationConstants {
     private NoteeficationApplicationConstants() {}
 
     public static final String NOTIFICATION_ID = "notificationId";
-    public static final String ACTION_EDIT = "com.example.edit";
-    public static final String ACTION_DELETE = "com.example.cancel";
-    public static final String ACTION_COPY = "com.example.cancel";
+    public static final String ACTION_EDIT = "danylenko.stanislav.noteefication.edit";
+    public static final String ACTION_DELETE = "danylenko.stanislav.noteefication.cancel";
+    public static final String ACTION_COPY = "danylenko.stanislav.noteefication.cancel";
     public static final String EDIT_TEXT = "EDIT_TEXT";
 
     public static final String NOTE_APPLICATION_CHANNEL = "NoteApplicationChannel";
     public static final String CHANNEL_ID = "channel-01";
 
     public static final String DELETE = "DELETE";
-    public static final String TYPE_NOTE = "Type note";
+    public static final String COPY = "COPY";
     public static final String EDIT = "EDIT";
 
+    public static final String TYPE_NOTE = "Type note";
+
     public static final String NOTES_LIST = "NOTES_LIST";
+    public static final String TAB_INDEX = "TAB_INDEX";
+
+    public static final String VALUE = "value";
+    public static final String COPIED_TO_CLIPBOARD = "Copied to clipboard";
 
     public static final String[] EMOJI = new String[]{
             "\uD83D\uDE0E",

@@ -14,12 +14,11 @@
         android:roundIcon="@mipmap/ic_launcher_pin_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity
-            android:name=".activity.NotesTabActivity"/>
+        <activity android:name=".activity.NotesTabActivity" />
         <activity
             android:name=".activity.MainActivity"
-            android:theme="@style/Theme.Transparent"
-            android:windowSoftInputMode="adjustResize">
+            android:windowSoftInputMode="adjustResize"
+            android:theme="@style/Theme.Transparent">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -27,21 +26,19 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name=".handler.ButtonReceiver">
+        <receiver android:name=".handler.AddReceiver">
             <intent-filter>
-                <action android:name="com.example.cancel" />
+                <action android:name="danylenko.stanislav.noteefication.cancel" />
             </intent-filter>
         </receiver>
-
         <receiver android:name=".handler.EditReceiver">
             <intent-filter>
-                <action android:name="com.example.edit" />
+                <action android:name="danylenko.stanislav.noteefication.edit" />
             </intent-filter>
         </receiver>
-
         <receiver android:name=".handler.CopyReceiver">
             <intent-filter>
-                <action android:name="com.example.copy" />
+                <action android:name="danylenko.stanislav.noteefication.copy" />
             </intent-filter>
         </receiver>
 

@@ -5,6 +5,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
+import java.util.Date;
+
 import danylenko.stanislav.noteefication.NoteeficationApplication;
 import danylenko.stanislav.noteefication.db.AppDatabase;
 import danylenko.stanislav.noteefication.db.Note;
@@ -13,7 +15,7 @@ import danylenko.stanislav.noteefication.db.Status;
 
 import static danylenko.stanislav.noteefication.constants.NoteeficationApplicationConstants.NOTIFICATION_ID;
 
-public class ButtonReceiver extends BroadcastReceiver {
+public class AddReceiver extends BroadcastReceiver {
 
     private AppDatabase db;
     private NoteDao noteDao;
@@ -31,6 +33,7 @@ public class ButtonReceiver extends BroadcastReceiver {
 
         Note note = noteDao.getById(notificationId);
         note.status = Status.DONE;
+        note.creationDate = new Date();
         noteDao.update(note);
 
     }

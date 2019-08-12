@@ -15,7 +15,7 @@ import android.support.v4.content.ContextCompat;
 import java.util.Random;
 
 import danylenko.stanislav.noteefication.R;
-import danylenko.stanislav.noteefication.handler.ButtonReceiver;
+import danylenko.stanislav.noteefication.handler.AddReceiver;
 import danylenko.stanislav.noteefication.handler.CopyReceiver;
 import danylenko.stanislav.noteefication.handler.EditReceiver;
 
@@ -23,6 +23,7 @@ import static danylenko.stanislav.noteefication.constants.NoteeficationApplicati
 import static danylenko.stanislav.noteefication.constants.NoteeficationApplicationConstants.ACTION_DELETE;
 import static danylenko.stanislav.noteefication.constants.NoteeficationApplicationConstants.ACTION_EDIT;
 import static danylenko.stanislav.noteefication.constants.NoteeficationApplicationConstants.CHANNEL_ID;
+import static danylenko.stanislav.noteefication.constants.NoteeficationApplicationConstants.COPY;
 import static danylenko.stanislav.noteefication.constants.NoteeficationApplicationConstants.DELETE;
 import static danylenko.stanislav.noteefication.constants.NoteeficationApplicationConstants.EDIT;
 import static danylenko.stanislav.noteefication.constants.NoteeficationApplicationConstants.EDIT_TEXT;
@@ -30,6 +31,7 @@ import static danylenko.stanislav.noteefication.constants.NoteeficationApplicati
 import static danylenko.stanislav.noteefication.constants.NoteeficationApplicationConstants.NOTE_APPLICATION_CHANNEL;
 import static danylenko.stanislav.noteefication.constants.NoteeficationApplicationConstants.NOTIFICATION_ID;
 import static danylenko.stanislav.noteefication.constants.NoteeficationApplicationConstants.TYPE_NOTE;
+import static danylenko.stanislav.noteefication.constants.NoteeficationApplicationConstants.VALUE;
 
 public final class NotificationUtils {
 
@@ -49,14 +51,14 @@ public final class NotificationUtils {
         }
 
 
-        Intent buttonIntent = new Intent(ACTION_DELETE, null, context, ButtonReceiver.class);
+        Intent buttonIntent = new Intent(ACTION_DELETE, null, context, AddReceiver.class);
         buttonIntent.putExtra(NOTIFICATION_ID, id);
 
         PendingIntent btPendingIntent = PendingIntent.getBroadcast(context, id, buttonIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
 
         Intent copyIntent = new Intent(ACTION_COPY, null, context, CopyReceiver.class);
-        copyIntent.putExtra("value", body);
+        copyIntent.putExtra(VALUE, body);
 
         PendingIntent copyPendingIntent = PendingIntent.getBroadcast(context, id, copyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
@@ -69,7 +71,7 @@ public final class NotificationUtils {
                 .setColor(ContextCompat.getColor(context, R.color.colorBlack))
 
                 .addAction(R.drawable.ic_delete_black_24dp, DELETE, btPendingIntent)
-                .addAction(R.drawable.ic_content_copy, "COPY", copyPendingIntent)
+                .addAction(R.drawable.ic_content_copy, COPY, copyPendingIntent)
 
                 .setStyle(new NotificationCompat.BigTextStyle()
                         .bigText(body))

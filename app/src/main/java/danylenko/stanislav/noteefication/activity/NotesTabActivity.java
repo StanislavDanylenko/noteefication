@@ -9,6 +9,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
+import java.util.Date;
 import java.util.List;
 
 import danylenko.stanislav.noteefication.NoteeficationApplication;
@@ -18,6 +19,8 @@ import danylenko.stanislav.noteefication.db.Note;
 import danylenko.stanislav.noteefication.db.NoteDao;
 import danylenko.stanislav.noteefication.db.Status;
 import danylenko.stanislav.noteefication.fragment.SampleFragmentPagerAdapter;
+
+import static danylenko.stanislav.noteefication.constants.NoteeficationApplicationConstants.TAB_INDEX;
 
 
 public class NotesTabActivity extends AppCompatActivity {
@@ -41,7 +44,7 @@ public class NotesTabActivity extends AppCompatActivity {
         tabLayout.setupWithViewPager(viewPager);
 
         Intent intent = getIntent();
-        int tabIndex = intent.getIntExtra("tabIndex", 0);
+        int tabIndex = intent.getIntExtra(TAB_INDEX, 0);
 
         viewPager.setCurrentItem(tabIndex);
 
@@ -63,6 +66,7 @@ public class NotesTabActivity extends AppCompatActivity {
         for (Note note : actual) {
             notificationManager.cancel((int)note.id);
             note.status = Status.DONE;
+            note.creationDate = new Date();
             noteDao.update(note);
         }
         recreateActivity(0);
@@ -72,7 +76,7 @@ public class NotesTabActivity extends AppCompatActivity {
         finish();
 
         Intent selfIntent = getIntent();
-        selfIntent.putExtra("tabIndex", tabIndex);
+        selfIntent.putExtra(TAB_INDEX, tabIndex);
         startActivity(selfIntent);
     }
 }
