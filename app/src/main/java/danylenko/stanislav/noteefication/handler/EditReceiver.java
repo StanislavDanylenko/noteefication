@@ -15,6 +15,7 @@ import danylenko.stanislav.noteefication.notification.NotificationUtils;
 import static danylenko.stanislav.noteefication.constants.NoteeficationApplicationConstants.ACTION_EDIT;
 import static danylenko.stanislav.noteefication.constants.NoteeficationApplicationConstants.EDIT_TEXT;
 import static danylenko.stanislav.noteefication.constants.NoteeficationApplicationConstants.NOTIFICATION_ID;
+import static danylenko.stanislav.noteefication.notification.NotificationUtils.restartTabsActivity;
 
 
 public class EditReceiver extends BroadcastReceiver {
@@ -29,7 +30,7 @@ public class EditReceiver extends BroadcastReceiver {
             Bundle results = RemoteInput.getResultsFromIntent(intent);
             if (results != null) {
                 CharSequence editedText = results.getCharSequence(EDIT_TEXT);
-                if(editedText != null && editedText.length() > 0) {
+                if (editedText != null && editedText.length() > 0) {
                     int notificationId = intent.getIntExtra(NOTIFICATION_ID, 0);
 
                     db = NoteeficationApplication.getInstance().getDatabase();
@@ -40,6 +41,7 @@ public class EditReceiver extends BroadcastReceiver {
                     noteDao.update(note);
 
                     NotificationUtils.showNotification(context, editedText.toString(), intent, notificationId);
+                    restartTabsActivity(context);
                 }
 
             }

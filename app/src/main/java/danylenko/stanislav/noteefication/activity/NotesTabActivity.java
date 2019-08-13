@@ -25,9 +25,11 @@ import static danylenko.stanislav.noteefication.constants.NoteeficationApplicati
 
 public class NotesTabActivity extends AppCompatActivity {
 
-    private SampleFragmentPagerAdapter adapter;
+    public static boolean restart = false;
+
     private AppDatabase db;
     private NoteDao noteDao;
+    private ViewPager viewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,8 +38,8 @@ public class NotesTabActivity extends AppCompatActivity {
 
         getSupportActionBar().hide();
 
-        ViewPager viewPager = findViewById(R.id.viewpager);
-        adapter = new SampleFragmentPagerAdapter(getSupportFragmentManager());
+        viewPager = findViewById(R.id.viewpager);
+        SampleFragmentPagerAdapter adapter = new SampleFragmentPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(adapter);
 
         TabLayout tabLayout = findViewById(R.id.sliding_tabs);
@@ -54,7 +56,7 @@ public class NotesTabActivity extends AppCompatActivity {
         db = NoteeficationApplication.getInstance().getDatabase();
         noteDao = db.noteDao();
         noteDao.deleteByStatus(Status.DONE.getValue());
-        recreateActivity(1);
+        recreateActivity();
     }
 
     public void cleanAllCurrent(View view) {
@@ -69,14 +71,24 @@ public class NotesTabActivity extends AppCompatActivity {
             note.creationDate = new Date();
             noteDao.update(note);
         }
-        recreateActivity(0);
+        recreateActivity();
     }
 
-    private void recreateActivity(int tabIndex) {
+    private void recreateActivity() {
         finish();
 
         Intent selfIntent = getIntent();
+        int tabIndex = viewPager.getCurrentItem();
         selfIntent.putExtra(TAB_INDEX, tabIndex);
         startActivity(selfIntent);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(restart){
+            restart = false;
+            recreateActivity();
+        }
     }
 }

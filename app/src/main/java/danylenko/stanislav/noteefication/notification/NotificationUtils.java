@@ -1,8 +1,10 @@
 package danylenko.stanislav.noteefication.notification;
 
+import android.app.ActivityManager;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
@@ -12,13 +14,17 @@ import android.support.v4.app.RemoteInput;
 import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.content.ContextCompat;
 
+import java.util.List;
 import java.util.Random;
 
 import danylenko.stanislav.noteefication.R;
-import danylenko.stanislav.noteefication.handler.AddReceiver;
+import danylenko.stanislav.noteefication.activity.NotesTabActivity;
+import danylenko.stanislav.noteefication.handler.DeleteReceiver;
 import danylenko.stanislav.noteefication.handler.CopyReceiver;
 import danylenko.stanislav.noteefication.handler.EditReceiver;
 
+import static android.content.Context.ACTIVITY_SERVICE;
+import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 import static danylenko.stanislav.noteefication.constants.NoteeficationApplicationConstants.ACTION_COPY;
 import static danylenko.stanislav.noteefication.constants.NoteeficationApplicationConstants.ACTION_DELETE;
 import static danylenko.stanislav.noteefication.constants.NoteeficationApplicationConstants.ACTION_EDIT;
@@ -35,7 +41,8 @@ import static danylenko.stanislav.noteefication.constants.NoteeficationApplicati
 
 public final class NotificationUtils {
 
-    private NotificationUtils(){}
+    private NotificationUtils() {
+    }
 
     public static void showNotification(Context context, String body, Intent intent, int id) {
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
@@ -51,7 +58,7 @@ public final class NotificationUtils {
         }
 
 
-        Intent buttonIntent = new Intent(ACTION_DELETE, null, context, AddReceiver.class);
+        Intent buttonIntent = new Intent(ACTION_DELETE, null, context, DeleteReceiver.class);
         buttonIntent.putExtra(NOTIFICATION_ID, id);
 
         PendingIntent btPendingIntent = PendingIntent.getBroadcast(context, id, buttonIntent, PendingIntent.FLAG_UPDATE_CURRENT);
@@ -121,5 +128,20 @@ public final class NotificationUtils {
         int position = new Random().nextInt(EMOJI.length);
         return EMOJI[position];
     }
+
+
+    public static void restartTabsActivity(Context context) {
+        ActivityManager manager = (ActivityManager) context.getSystemService(ACTIVITY_SERVICE);
+        List<ActivityManager.RunningTaskInfo> runningTaskInfo = manager.getRunningTasks(1);
+        ComponentName componentInfo = runningTaskInfo.get(0).topActivity;
+        boolean equals = componentInfo.getClassName().equals(NotesTabActivity.class.getName());
+        if(equals) {
+            Intent intent = new Intent(context, NotesTabActivity.class);
+            intent.setFlags(FLAG_ACTIVITY_NEW_TASK);
+            NotesTabActivity.restart = true;
+            context.startActivity(intent);
+        }
+    }
+
 
 }

@@ -14,8 +14,9 @@ import danylenko.stanislav.noteefication.db.NoteDao;
 import danylenko.stanislav.noteefication.db.Status;
 
 import static danylenko.stanislav.noteefication.constants.NoteeficationApplicationConstants.NOTIFICATION_ID;
+import static danylenko.stanislav.noteefication.notification.NotificationUtils.restartTabsActivity;
 
-public class AddReceiver extends BroadcastReceiver {
+public class DeleteReceiver extends BroadcastReceiver {
 
     private AppDatabase db;
     private NoteDao noteDao;
@@ -35,6 +36,8 @@ public class AddReceiver extends BroadcastReceiver {
         note.status = Status.DONE;
         note.creationDate = new Date();
         noteDao.update(note);
+
+        restartTabsActivity(context);
 
     }
 

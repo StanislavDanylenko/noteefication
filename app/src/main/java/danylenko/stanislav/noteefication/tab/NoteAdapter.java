@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.text.DateFormat;
 import java.util.List;
@@ -77,14 +76,6 @@ public class NoteAdapter extends BaseAdapter {
 
         holder.value.setText(noteList.get(position).text);
         holder.date.setText(dateString);
-
-        convertView.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                Toast.makeText(v.getContext(),"asd", Toast.LENGTH_LONG).show();
-                return true;
-            }
-        });
 
         return convertView;
     }
