@@ -4,15 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:weightSum="12">
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:background="#F7000000"
-        android:orientation="horizontal"
-        android:layout_weight="1">
+        android:orientation="horizontal">
 
         <TextView
             android:layout_width="0dp"
@@ -36,28 +34,25 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:orientation="vertical"
-        android:layout_weight="11"
-        android:weightSum="11">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <ListView
             android:id="@+id/listView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginBottom="20dp"
-            android:layout_weight="10"/>
+            android:layout_weight="1"/>
 
         <Button
             android:id="@+id/button3"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:text="CLEAN"
             android:onClick="cleanAllCurrent"
             android:textColor="@color/colorWhite"
             android:background="@drawable/button_clean"
             android:textSize="20sp"
-            android:layout_weight="1"/>
+            android:layout_gravity="bottom"/>
 
     </LinearLayout>
 
