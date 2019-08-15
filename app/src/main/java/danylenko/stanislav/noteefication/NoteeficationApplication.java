@@ -7,7 +7,7 @@ import danylenko.stanislav.noteefication.db.AppDatabase;
 
 public class NoteeficationApplication extends Application {
 
-    public static NoteeficationApplication instance;
+    private static NoteeficationApplication instance;
 
     private AppDatabase database;
 

@@ -67,7 +67,6 @@ public class NoteAdapter extends BaseAdapter {
 
             convertView.setTag(holder);
         } else {
-            // the getTag returns the viewHolder object set as a tag to the view
             holder = (ViewHolder) convertView.getTag();
         }
 
@@ -83,10 +82,7 @@ public class NoteAdapter extends BaseAdapter {
 
 
     private class ViewHolder {
-
         private TextView value;
         private TextView date;
-
-
     }
 }

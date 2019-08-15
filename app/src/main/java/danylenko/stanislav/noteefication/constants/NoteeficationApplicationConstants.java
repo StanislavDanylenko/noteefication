@@ -2,7 +2,8 @@ package danylenko.stanislav.noteefication.constants;
 
 public final class NoteeficationApplicationConstants {
 
-    private NoteeficationApplicationConstants() {}
+    private NoteeficationApplicationConstants() {
+    }
 
     public static final String NOTIFICATION_ID = "notificationId";
     public static final String ACTION_EDIT = "danylenko.stanislav.noteefication.edit";
@@ -13,7 +14,7 @@ public final class NoteeficationApplicationConstants {
     public static final String NOTE_APPLICATION_CHANNEL = "NoteApplicationChannel";
     public static final String CHANNEL_ID = "channel-01";
 
-    public static final String DELETE = "DELETE";
+    public static final String REMOVE = "REMOVE";
     public static final String COPY = "COPY";
     public static final String EDIT = "EDIT";
 
@@ -24,6 +25,10 @@ public final class NoteeficationApplicationConstants {
 
     public static final String VALUE = "value";
     public static final String COPIED_TO_CLIPBOARD = "Copied to clipboard";
+
+    public static final String EDIT_NOTE = "Edit note";
+    public static final String OK = "OK";
+    public static final String CANCEL = "Cancel";
 
     public static final String[] EMOJI = new String[]{
             "\uD83D\uDE0E",
@@ -79,8 +84,6 @@ public final class NoteeficationApplicationConstants {
             "\uD83D\uDC9F",
             "\uD83C\uDF80",
             "\uD83C\uDF81",
-            "\uD83C\uDF8A",
-            "\uD83C\uDF8A",
             "\uD83C\uDF8A",
             "\uD83C\uDF89",
             "\uD83E\uDD70",

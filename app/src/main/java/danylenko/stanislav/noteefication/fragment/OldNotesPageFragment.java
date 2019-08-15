@@ -1,7 +1,5 @@
 package danylenko.stanislav.noteefication.fragment;
 
-import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -17,23 +15,21 @@ import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.List;
 
+import danylenko.stanislav.noteefication.util.db.DBActionHandler;
 import danylenko.stanislav.noteefication.R;
-import danylenko.stanislav.noteefication.activity.NotesTabActivity;
 import danylenko.stanislav.noteefication.db.Note;
 import danylenko.stanislav.noteefication.tab.NoteAdapter;
 
 import static danylenko.stanislav.noteefication.constants.NoteeficationApplicationConstants.NOTES_LIST;
-import static danylenko.stanislav.noteefication.constants.NoteeficationApplicationConstants.TAB_INDEX;
 
 
 public class OldNotesPageFragment extends Fragment {
 
     private List<Note> notes;
 
-
-    public static OldNotesPageFragment newInstance(ArrayList<Note> notes) {
+    public static OldNotesPageFragment newInstance(List<Note> notes) {
         Bundle args = new Bundle();
-        args.putSerializable(NOTES_LIST, notes);
+        args.putSerializable(NOTES_LIST, (ArrayList<Note>)notes);
         OldNotesPageFragment fragment = new OldNotesPageFragment();
         fragment.setArguments(args);
         return fragment;
@@ -51,7 +47,7 @@ public class OldNotesPageFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        LinearLayout view = (LinearLayout)inflater.inflate(R.layout.fragment_old_notes, container, false);
+        LinearLayout view = (LinearLayout) inflater.inflate(R.layout.fragment_old_notes, container, false);
         ListView listView = view.findViewById(R.id.listView);
         NoteAdapter noteAdapter = new NoteAdapter(getContext(), notes);
         listView.setAdapter(noteAdapter);
@@ -71,19 +67,24 @@ public class OldNotesPageFragment extends Fragment {
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
-        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-        switch (item.getItemId()) {
-            case R.id.copy:
-                return true;
-            case R.id.delete:
-                Intent intent = new Intent(this.getContext(), NotesTabActivity.class);
-                intent.putExtra(TAB_INDEX, 1);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intent);
-                return true;
-            default:
-                return super.onContextItemSelected(item);
+        if (getUserVisibleHint()) {
+            AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+            Note note = notes.get(info.position);
+            switch (item.getItemId()) {
+                case R.id.copy:
+                    DBActionHandler.handleCopyAction(getContext(), note.text);
+                    return true;
+                case R.id.delete:
+                    DBActionHandler.handleDeleteAction(getContext(), note);
+                    return true;
+                case R.id.restore:
+                    DBActionHandler.handleRestoreAction(getContext(), note);
+                    return true;
+                default:
+                    return super.onContextItemSelected(item);
+            }
         }
+        return super.onContextItemSelected(item);
     }
 
 }

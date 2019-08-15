@@ -15,8 +15,8 @@ public enum Status {
     }
 
     public static Status fromString(String value) {
-        for(Status status : Status.values()) {
-            if(status.value.equals(value)) {
+        for (Status status : Status.values()) {
+            if (status.value.equals(value)) {
                 return status;
             }
         }

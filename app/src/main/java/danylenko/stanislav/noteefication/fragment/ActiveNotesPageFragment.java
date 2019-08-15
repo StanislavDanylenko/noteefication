@@ -1,10 +1,5 @@
 package danylenko.stanislav.noteefication.fragment;
 
-import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -16,27 +11,26 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import danylenko.stanislav.noteefication.R;
-import danylenko.stanislav.noteefication.activity.NotesTabActivity;
 import danylenko.stanislav.noteefication.db.Note;
 import danylenko.stanislav.noteefication.tab.NoteAdapter;
+import danylenko.stanislav.noteefication.util.db.DBActionHandler;
+import danylenko.stanislav.noteefication.util.modal.ModalUtils;
 
 import static danylenko.stanislav.noteefication.constants.NoteeficationApplicationConstants.NOTES_LIST;
-import static danylenko.stanislav.noteefication.constants.NoteeficationApplicationConstants.TAB_INDEX;
 
 
 public class ActiveNotesPageFragment extends Fragment {
 
     private List<Note> notes;
 
-    public static ActiveNotesPageFragment newInstance(ArrayList<Note> notes) {
+    public static ActiveNotesPageFragment newInstance(List<Note> notes) {
         Bundle args = new Bundle();
-        args.putSerializable(NOTES_LIST, notes);
+        args.putSerializable(NOTES_LIST, (ArrayList<Note>)notes);
         ActiveNotesPageFragment fragment = new ActiveNotesPageFragment();
         fragment.setArguments(args);
         return fragment;
@@ -54,7 +48,7 @@ public class ActiveNotesPageFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        LinearLayout view = (LinearLayout)inflater.inflate(R.layout.fragment_active_notes, container, false);
+        LinearLayout view = (LinearLayout) inflater.inflate(R.layout.fragment_active_notes, container, false);
         ListView listView = view.findViewById(R.id.listView);
         NoteAdapter noteAdapter = new NoteAdapter(getContext(), notes);
         listView.setAdapter(noteAdapter);
@@ -71,49 +65,30 @@ public class ActiveNotesPageFragment extends Fragment {
         getActivity().getMenuInflater().inflate(R.menu.context_menu_active, menu);
     }
 
+
     @Override
     public boolean onContextItemSelected(MenuItem item) {
-        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-        switch (item.getItemId()) {
-            case R.id.edit:
-                Note note = notes.get(info.position);
-                showDialog(this.getContext(), note.text);
-                return true;
-            case R.id.delete:
-                Intent intent = new Intent(this.getContext(), NotesTabActivity.class);
-                intent.putExtra(TAB_INDEX, 1);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intent);
-                return true;
-            default:
-                return super.onContextItemSelected(item);
+        if (getUserVisibleHint()) {
+            AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+            Note note = notes.get(info.position);
+            switch (item.getItemId()) {
+                case R.id.copy:
+                    DBActionHandler.handleCopyAction(getContext(), note.text);
+                    return true;
+                case R.id.edit:
+                    ModalUtils.showDialog(getContext(), note, getActivity().getIntent());
+                    return true;
+                case R.id.remove:
+                    DBActionHandler.handleRemoveAction(getContext(), note.id);
+                    return true;
+                case R.id.show:
+                    DBActionHandler.handleShowAction(getContext(), note);
+                    return true;
+                default:
+                    return super.onContextItemSelected(item);
+            }
         }
-    }
-
-    private void showDialog(Context context, String value) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setTitle("Edit");
-
-        LayoutInflater layoutInflater = LayoutInflater.from(context);
-        View editTextView = layoutInflater.inflate(R.layout.dialog_edit, null);
-        builder.setView(editTextView);
-        TextView editText = editTextView.findViewById(R.id.value);
-        editText.setText(value);
-
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        });
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        });
-
-        builder.show();
+        return super.onContextItemSelected(item);
     }
 
 }

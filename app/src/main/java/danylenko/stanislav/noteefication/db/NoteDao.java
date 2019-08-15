@@ -16,7 +16,7 @@ public interface NoteDao {
 
 
     @Query("select last_insert_rowid()")
-    long getLastId();
+    int getLastId();
 
     @Query("SELECT * FROM Note WHERE id = :id")
     Note getById(long id);

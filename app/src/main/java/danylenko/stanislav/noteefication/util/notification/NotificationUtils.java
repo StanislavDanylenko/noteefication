@@ -1,4 +1,4 @@
-package danylenko.stanislav.noteefication.notification;
+package danylenko.stanislav.noteefication.util.notification;
 
 import android.app.ActivityManager;
 import android.app.NotificationChannel;
@@ -30,7 +30,7 @@ import static danylenko.stanislav.noteefication.constants.NoteeficationApplicati
 import static danylenko.stanislav.noteefication.constants.NoteeficationApplicationConstants.ACTION_EDIT;
 import static danylenko.stanislav.noteefication.constants.NoteeficationApplicationConstants.CHANNEL_ID;
 import static danylenko.stanislav.noteefication.constants.NoteeficationApplicationConstants.COPY;
-import static danylenko.stanislav.noteefication.constants.NoteeficationApplicationConstants.DELETE;
+import static danylenko.stanislav.noteefication.constants.NoteeficationApplicationConstants.REMOVE;
 import static danylenko.stanislav.noteefication.constants.NoteeficationApplicationConstants.EDIT;
 import static danylenko.stanislav.noteefication.constants.NoteeficationApplicationConstants.EDIT_TEXT;
 import static danylenko.stanislav.noteefication.constants.NoteeficationApplicationConstants.EMOJI;
@@ -77,7 +77,7 @@ public final class NotificationUtils {
                 .setAutoCancel(false)
                 .setColor(ContextCompat.getColor(context, R.color.colorBlack))
 
-                .addAction(R.drawable.ic_delete_black_24dp, DELETE, btPendingIntent)
+                .addAction(R.drawable.ic_delete_black_24dp, REMOVE, btPendingIntent)
                 .addAction(R.drawable.ic_content_copy, COPY, copyPendingIntent)
 
                 .setStyle(new NotificationCompat.BigTextStyle()
@@ -138,7 +138,7 @@ public final class NotificationUtils {
         if(equals) {
             Intent intent = new Intent(context, NotesTabActivity.class);
             intent.setFlags(FLAG_ACTIVITY_NEW_TASK);
-            NotesTabActivity.restart = true;
+            NotesTabActivity.setRestart(true);
             context.startActivity(intent);
         }
     }

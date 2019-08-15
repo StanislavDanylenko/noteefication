@@ -1,7 +1,5 @@
 package danylenko.stanislav.noteefication.activity;
 
-import android.app.NotificationManager;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -9,26 +7,17 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
-import java.util.Date;
-import java.util.List;
-
-import danylenko.stanislav.noteefication.NoteeficationApplication;
 import danylenko.stanislav.noteefication.R;
-import danylenko.stanislav.noteefication.db.AppDatabase;
-import danylenko.stanislav.noteefication.db.Note;
-import danylenko.stanislav.noteefication.db.NoteDao;
-import danylenko.stanislav.noteefication.db.Status;
 import danylenko.stanislav.noteefication.fragment.SampleFragmentPagerAdapter;
+import danylenko.stanislav.noteefication.util.db.DBActionHandler;
 
 import static danylenko.stanislav.noteefication.constants.NoteeficationApplicationConstants.TAB_INDEX;
 
 
 public class NotesTabActivity extends AppCompatActivity {
 
-    public static boolean restart = false;
+    private static boolean restart = false;
 
-    private AppDatabase db;
-    private NoteDao noteDao;
     private ViewPager viewPager;
 
     @Override
@@ -53,24 +42,12 @@ public class NotesTabActivity extends AppCompatActivity {
     }
 
     public void cleanHistory(View view) {
-        db = NoteeficationApplication.getInstance().getDatabase();
-        noteDao = db.noteDao();
-        noteDao.deleteByStatus(Status.DONE.getValue());
+        DBActionHandler.handleCleanHistoryAction();
         recreateActivity();
     }
 
     public void cleanAllCurrent(View view) {
-        db = NoteeficationApplication.getInstance().getDatabase();
-        noteDao = db.noteDao();
-        List<Note> actual = noteDao.getByStatus(Status.ACTUAL.getValue());
-
-        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        for (Note note : actual) {
-            notificationManager.cancel((int)note.id);
-            note.status = Status.DONE;
-            note.creationDate = new Date();
-            noteDao.update(note);
-        }
+        DBActionHandler.handleAllCurrentAction(this);
         recreateActivity();
     }
 
@@ -83,10 +60,18 @@ public class NotesTabActivity extends AppCompatActivity {
         startActivity(selfIntent);
     }
 
+    public static boolean isRestart() {
+        return restart;
+    }
+
+    public static void setRestart(boolean restart) {
+        NotesTabActivity.restart = restart;
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
-        if(restart){
+        if (restart) {
             restart = false;
             recreateActivity();
         }

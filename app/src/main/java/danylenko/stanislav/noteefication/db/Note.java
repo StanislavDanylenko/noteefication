@@ -14,7 +14,7 @@ import danylenko.stanislav.noteefication.db.converter.StatusConverter;
 public class Note implements Serializable {
 
     @PrimaryKey(autoGenerate = true)
-    public long id;
+    public int id;
 
     public String text;
 
