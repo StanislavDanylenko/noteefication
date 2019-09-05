@@ -41,7 +41,9 @@
             android:id="@+id/listView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:choiceMode="singleChoice"
+            android:background="@color/colorWhite"/>
 
         <Button
             android:id="@+id/button3"
