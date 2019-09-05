@@ -21,7 +21,7 @@ public interface NoteDao {
     @Query("SELECT * FROM Note WHERE id = :id")
     Note getById(long id);
 
-    @Query("SELECT * FROM Note WHERE status = :status")
+    @Query("SELECT * FROM Note WHERE status = :status ORDER BY creationDate DESC")
     List<Note> getByStatus(String status);
 
 
