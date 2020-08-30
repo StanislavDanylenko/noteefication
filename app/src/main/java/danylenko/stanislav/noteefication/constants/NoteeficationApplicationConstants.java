@@ -11,8 +11,8 @@ public final class NoteeficationApplicationConstants {
     public static final String ACTION_COPY = "danylenko.stanislav.noteefication.cancel";
     public static final String EDIT_TEXT = "EDIT_TEXT";
 
-    public static final String NOTE_APPLICATION_CHANNEL = "NoteApplicationChannel";
-    public static final String CHANNEL_ID = "channel-01";
+    public static final String NOTE_APPLICATION_CHANNEL = "Noteefication";
+    public static final String CHANNEL_ID = "noteefication-01";
 
     public static final String REMOVE = "REMOVE";
     public static final String COPY = "COPY";
