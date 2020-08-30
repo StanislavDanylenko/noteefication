@@ -76,6 +76,7 @@ public final class NotificationUtils {
                 .setOngoing(true)
                 .setAutoCancel(false)
                 .setColor(ContextCompat.getColor(context, R.color.colorBlack))
+                .setOnlyAlertOnce(true)
 
                 .addAction(R.drawable.ic_delete_black_24dp, REMOVE, btPendingIntent)
                 .addAction(R.drawable.ic_content_copy, COPY, copyPendingIntent)
