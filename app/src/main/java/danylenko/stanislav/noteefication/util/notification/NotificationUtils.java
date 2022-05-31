@@ -41,6 +41,8 @@ import static danylenko.stanislav.noteefication.constants.NoteeficationApplicati
 
 public final class NotificationUtils {
 
+    private static final Random RANDOM = new Random();
+
     private NotificationUtils() {
     }
 
@@ -126,7 +128,7 @@ public final class NotificationUtils {
     }
 
     private static String randomEmoji() {
-        int position = new Random().nextInt(EMOJI.length);
+        int position = RANDOM.nextInt(EMOJI.length);
         return EMOJI[position];
     }
 
