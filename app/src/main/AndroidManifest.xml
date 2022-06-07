@@ -20,7 +20,8 @@
             android:name=".activity.MainActivity"
             android:windowSoftInputMode="adjustResize"
             android:theme="@style/Theme.Transparent"
-            android:launchMode="singleInstance">
+            android:launchMode="singleInstance"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -28,17 +29,20 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name=".handler.DeleteReceiver">
+        <receiver android:name=".handler.DeleteReceiver"
+            android:exported="true">
             <intent-filter>
                 <action android:name="danylenko.stanislav.noteefication.cancel" />
             </intent-filter>
         </receiver>
-        <receiver android:name=".handler.EditReceiver">
+        <receiver android:name=".handler.EditReceiver"
+            android:exported="true">
             <intent-filter>
                 <action android:name="danylenko.stanislav.noteefication.edit" />
             </intent-filter>
         </receiver>
-        <receiver android:name=".handler.CopyReceiver">
+        <receiver android:name=".handler.CopyReceiver"
+            android:exported="true">
             <intent-filter>
                 <action android:name="danylenko.stanislav.noteefication.copy" />
             </intent-filter>

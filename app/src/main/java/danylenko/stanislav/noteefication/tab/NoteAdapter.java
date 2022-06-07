@@ -15,22 +15,22 @@ import danylenko.stanislav.noteefication.db.Note;
 
 public class NoteAdapter extends BaseAdapter {
 
-    private Context context;
-    private List<Note> noteList;
+    private final Context context;
+    private final List<Note> noteList;
 
     public NoteAdapter(Context context, List<Note> noteList) {
         this.context = context;
         this.noteList = noteList;
     }
 
-    @Override
+/*    @Override
     public int getViewTypeCount() {
         if (getCount() > 0) {
             return getCount();
         } else {
             return 1;
         }
-    }
+    }*/
 
     @Override
     public int getItemViewType(int position) {
@@ -78,8 +78,6 @@ public class NoteAdapter extends BaseAdapter {
 
         return convertView;
     }
-
-
 
     private class ViewHolder {
         private TextView value;

@@ -8,4 +8,5 @@
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorTap">#DDDDDD</color>
     <color name="colorTranslucent">#A8000000</color>
+    <color name="colorAppBar">#4C4C4C</color>
 </resources>

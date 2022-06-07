@@ -1,8 +1,8 @@
 package danylenko.stanislav.noteefication.fragment;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -12,35 +12,35 @@ import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import danylenko.stanislav.noteefication.customreceiver.AppReceiver;
 import danylenko.stanislav.noteefication.util.db.DBActionHandler;
 import danylenko.stanislav.noteefication.R;
 import danylenko.stanislav.noteefication.db.Note;
 import danylenko.stanislav.noteefication.tab.NoteAdapter;
+import danylenko.stanislav.noteefication.util.db.NotesCache;
 
-import static danylenko.stanislav.noteefication.constants.NoteeficationApplicationConstants.NOTES_LIST;
 
-
-public class OldNotesPageFragment extends Fragment {
+public class OldNotesPageFragment extends Fragment implements AppReceiver {
 
     private List<Note> notes;
-
-    public static OldNotesPageFragment newInstance(List<Note> notes) {
+    private NoteAdapter noteAdapter;
+/*    public static OldNotesPageFragment newInstance(List<Note> notes) {
         Bundle args = new Bundle();
         args.putSerializable(NOTES_LIST, (ArrayList<Note>)notes);
         OldNotesPageFragment fragment = new OldNotesPageFragment();
         fragment.setArguments(args);
         return fragment;
-    }
+    }*/
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
+        /*if (getArguments() != null) {
             notes = (List<Note>) getArguments().getSerializable(NOTES_LIST);
-        }
+        }*/
+        register();
         setHasOptionsMenu(true);
     }
 
@@ -49,7 +49,8 @@ public class OldNotesPageFragment extends Fragment {
                              Bundle savedInstanceState) {
         LinearLayout view = (LinearLayout) inflater.inflate(R.layout.fragment_old_notes, container, false);
         ListView listView = view.findViewById(R.id.listView);
-        NoteAdapter noteAdapter = new NoteAdapter(getContext(), notes);
+        notes = NotesCache.getHistoryNotesList();
+        noteAdapter = new NoteAdapter(getContext(), notes);
         listView.setAdapter(noteAdapter);
 
         registerForContextMenu(listView);
@@ -85,6 +86,16 @@ public class OldNotesPageFragment extends Fragment {
             }
         }
         return super.onContextItemSelected(item);
+    }
+
+    @Override
+    public void receive() {
+        noteAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void register() {
+        NotesCache.registerReceiver(this);
     }
 
 }

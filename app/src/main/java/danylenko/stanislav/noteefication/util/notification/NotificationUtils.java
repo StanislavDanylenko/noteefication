@@ -1,30 +1,24 @@
 package danylenko.stanislav.noteefication.util.notification;
 
-import android.app.ActivityManager;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.os.Build;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.RemoteInput;
-import android.support.v4.app.TaskStackBuilder;
-import android.support.v4.content.ContextCompat;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.RemoteInput;
+import androidx.core.app.TaskStackBuilder;
+import androidx.core.content.ContextCompat;
 
-import java.util.List;
 import java.util.Random;
 
 import danylenko.stanislav.noteefication.R;
-import danylenko.stanislav.noteefication.activity.NotesTabActivity;
 import danylenko.stanislav.noteefication.handler.DeleteReceiver;
 import danylenko.stanislav.noteefication.handler.CopyReceiver;
 import danylenko.stanislav.noteefication.handler.EditReceiver;
 
-import static android.content.Context.ACTIVITY_SERVICE;
-import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 import static danylenko.stanislav.noteefication.constants.NoteeficationApplicationConstants.ACTION_COPY;
 import static danylenko.stanislav.noteefication.constants.NoteeficationApplicationConstants.ACTION_DELETE;
 import static danylenko.stanislav.noteefication.constants.NoteeficationApplicationConstants.ACTION_EDIT;
@@ -63,13 +57,15 @@ public final class NotificationUtils {
         Intent buttonIntent = new Intent(ACTION_DELETE, null, context, DeleteReceiver.class);
         buttonIntent.putExtra(NOTIFICATION_ID, id);
 
-        PendingIntent btPendingIntent = PendingIntent.getBroadcast(context, id, buttonIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent btPendingIntent = PendingIntent.getBroadcast(context, id, buttonIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_MUTABLE);
 
 
         Intent copyIntent = new Intent(ACTION_COPY, null, context, CopyReceiver.class);
         copyIntent.putExtra(VALUE, body);
 
-        PendingIntent copyPendingIntent = PendingIntent.getBroadcast(context, id, copyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent copyPendingIntent = PendingIntent.getBroadcast(context, id, copyIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_MUTABLE);
 
 
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context, channelId)
@@ -94,7 +90,8 @@ public final class NotificationUtils {
             editIntent.putExtra(NOTIFICATION_ID, id);
 
             PendingIntent replyPendingIntent =
-                    PendingIntent.getBroadcast(context, id, editIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+                    PendingIntent.getBroadcast(context, id, editIntent,
+                            PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_MUTABLE);
 
 
             RemoteInput remoteInput = new RemoteInput.Builder(EDIT_TEXT)
@@ -120,7 +117,7 @@ public final class NotificationUtils {
         stackBuilder.addNextIntent(intent);
         PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(
                 0,
-                PendingIntent.FLAG_UPDATE_CURRENT
+                PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_MUTABLE
         );
         mBuilder.setContentIntent(resultPendingIntent);
 
@@ -133,7 +130,7 @@ public final class NotificationUtils {
     }
 
 
-    public static void restartTabsActivity(Context context) {
+/*    public static void restartTabsActivity(Context context) {
         ActivityManager manager = (ActivityManager) context.getSystemService(ACTIVITY_SERVICE);
         List<ActivityManager.RunningTaskInfo> runningTaskInfo = manager.getRunningTasks(1);
         if (!runningTaskInfo.isEmpty()) {
@@ -146,7 +143,7 @@ public final class NotificationUtils {
                 context.startActivity(intent);
             }
         }
-    }
+    }*/
 
 
 }

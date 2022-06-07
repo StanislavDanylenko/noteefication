@@ -29,10 +29,12 @@ public final class DBActionHandler {
     public static void handleEditAction(Context context, int notificationId, String editedText, Intent intent) {
         Note note = noteDao.getById(notificationId);
         note.text = editedText;
+
         noteDao.update(note);
+        NotesCache.updateListByNote(note);
 
         NotificationUtils.showNotification(context, editedText, intent, notificationId);
-        NotificationUtils.restartTabsActivity(context);
+//        NotificationUtils.restartTabsActivity(context);
     }
 
     public static void handleAddAction(Context context, String value, Intent intent) {
@@ -42,6 +44,7 @@ public final class DBActionHandler {
         note.status = Status.ACTUAL;
 
         int id = (int) noteDao.insert(note);
+        NotesCache.updateListByNote(note);
 
         NotificationUtils.showNotification(context, value, intent, id);
     }
@@ -61,18 +64,23 @@ public final class DBActionHandler {
         Note note = noteDao.getById(notificationId);
         note.status = Status.DONE;
         note.creationDate = new Date();
-        noteDao.update(note);
 
-        NotificationUtils.restartTabsActivity(context);
+        noteDao.update(note);
+        NotesCache.updateListByNote(note);
+
+//        NotificationUtils.restartTabsActivity(context);
     }
 
     public static void handleDeleteAction(Context context, Note note) {
         noteDao.delete(note);
-        NotificationUtils.restartTabsActivity(context);
+        NotesCache.updateListByNote(note);
+
+//        NotificationUtils.restartTabsActivity(context);
     }
 
     public static void handleCleanHistoryAction() {
         noteDao.deleteByStatus(Status.DONE.getValue());
+        NotesCache.updateByStatus(Status.DONE);
     }
 
     public static void handleAllCurrentAction(Context context) {
@@ -85,6 +93,7 @@ public final class DBActionHandler {
             note.creationDate = new Date();
             noteDao.update(note);
         }
+        NotesCache.updateByStatus(Status.ACTUAL);
     }
 
     public static void handleShowAllCurrentAction(Context context) {
@@ -101,8 +110,11 @@ public final class DBActionHandler {
     public static void handleRestoreAction(Context context, Note note) {
         note.creationDate = new Date();
         note.status = Status.ACTUAL;
+
         noteDao.update(note);
+        NotesCache.updateListByNote(note);
+
         NotificationUtils.showNotification(context, note.text, new Intent(context, MainActivity.class), note.id);
-        NotificationUtils.restartTabsActivity(context);
+//        NotificationUtils.restartTabsActivity(context);
     }
 }

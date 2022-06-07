@@ -1,7 +1,7 @@
 package danylenko.stanislav.noteefication;
 
 import android.app.Application;
-import android.arch.persistence.room.Room;
+import androidx.room.Room;
 
 import danylenko.stanislav.noteefication.db.AppDatabase;
 
