@@ -6,7 +6,8 @@
     <color name="colorBlack">#000000</color>
     <color name="colorRed">#A50000</color>
     <color name="colorWhite">#FFFFFF</color>
-    <color name="colorTap">#DDDDDD</color>
+    <color name="colorTap">#383838</color>
     <color name="colorTranslucent">#A8000000</color>
     <color name="colorAppBar">#4C4C4C</color>
+    <color name="colorText">#E8E8E8</color>
 </resources>

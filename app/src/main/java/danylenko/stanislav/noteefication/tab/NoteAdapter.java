@@ -64,6 +64,7 @@ public class NoteAdapter extends BaseAdapter {
 
             holder.value = (TextView) convertView.findViewById(R.id.value);
             holder.date = (TextView) convertView.findViewById(R.id.date);
+            holder.smile = (TextView) convertView.findViewById(R.id.smile);
 
             convertView.setTag(holder);
         } else {
@@ -75,6 +76,7 @@ public class NoteAdapter extends BaseAdapter {
 
         holder.value.setText(noteList.get(position).text);
         holder.date.setText(dateString);
+        holder.smile.setText("\uD83D\uDE0E");
 
         return convertView;
     }
@@ -82,5 +84,6 @@ public class NoteAdapter extends BaseAdapter {
     private class ViewHolder {
         private TextView value;
         private TextView date;
+        private TextView smile;
     }
 }

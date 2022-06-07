@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         app:tabIndicatorColor="@color/colorRed"
         android:background="@color/colorAppBar"
-        app:tabTextColor="#E8E8E8"
+        app:tabTextColor="@color/colorText"
         app:tabMode="fixed" />
 
     <androidx.viewpager.widget.ViewPager
@@ -19,6 +19,6 @@
         android:layout_width="match_parent"
         android:layout_height="0px"
         android:layout_weight="1"
-        android:background="@android:color/white" />
+        android:background="@color/colorAppBar" />
 
 </LinearLayout>
