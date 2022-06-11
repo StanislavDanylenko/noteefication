@@ -27,10 +27,11 @@
         <EditText
             android:id="@+id/editText"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
             android:background="@drawable/bg_edittext"
             android:ems="10"
-            android:inputType="text"
+            android:inputType="textMultiLine"
             android:hint="Type your note here..."
             android:elevation="10dp" />
 
