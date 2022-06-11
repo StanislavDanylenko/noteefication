@@ -1,16 +1,18 @@
 package danylenko.stanislav.noteefication.fragment;
 
+import android.content.Context;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import android.view.ContextMenu;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
+
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.util.List;
 
@@ -26,66 +28,53 @@ public class OldNotesPageFragment extends Fragment implements AppReceiver {
 
     private List<Note> notes;
     private NoteAdapter noteAdapter;
-/*    public static OldNotesPageFragment newInstance(List<Note> notes) {
-        Bundle args = new Bundle();
-        args.putSerializable(NOTES_LIST, (ArrayList<Note>)notes);
-        OldNotesPageFragment fragment = new OldNotesPageFragment();
-        fragment.setArguments(args);
-        return fragment;
-    }*/
+    private Context context;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        /*if (getArguments() != null) {
-            notes = (List<Note>) getArguments().getSerializable(NOTES_LIST);
-        }*/
         register();
-        setHasOptionsMenu(true);
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         LinearLayout view = (LinearLayout) inflater.inflate(R.layout.fragment_old_notes, container, false);
-        ListView listView = view.findViewById(R.id.listView);
+        RecyclerView listView = view.findViewById(R.id.listView);
         notes = NotesCache.getHistoryNotesList();
-        noteAdapter = new NoteAdapter(getContext(), notes);
+        context = getContext();
+        noteAdapter = new NoteAdapter(notes, getContext(), this::showBottomSheetOldDialog);
         listView.setAdapter(noteAdapter);
 
-        registerForContextMenu(listView);
+        listView.setLayoutManager(new LinearLayoutManager(context));
 
         return view;
     }
 
-    @Override
-    public void onCreateContextMenu(ContextMenu menu, View v,
-                                    ContextMenu.ContextMenuInfo menuInfo) {
-        super.onCreateContextMenu(menu, v, menuInfo);
-        getActivity().getMenuInflater().inflate(R.menu.context_menu_old, menu);
+    private void showBottomSheetOldDialog(Note note) {
+        final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(context);
+        bottomSheetDialog.setContentView(R.layout.old_notes_bottom_menu);
 
-    }
+        LinearLayout copy = bottomSheetDialog.findViewById(R.id.on_dialog_copy);
+        LinearLayout restore = bottomSheetDialog.findViewById(R.id.on_dialog_restore);
+        LinearLayout delete = bottomSheetDialog.findViewById(R.id.on_dialog_delete);
 
-    @Override
-    public boolean onContextItemSelected(MenuItem item) {
-        if (getUserVisibleHint()) {
-            AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-            Note note = notes.get(info.position);
-            switch (item.getItemId()) {
-                case R.id.copy:
-                    DBActionHandler.handleCopyAction(getContext(), note.text);
-                    return true;
-                case R.id.delete:
-                    DBActionHandler.handleDeleteAction(getContext(), note);
-                    return true;
-                case R.id.restore:
-                    DBActionHandler.handleRestoreAction(getContext(), note);
-                    return true;
-                default:
-                    return super.onContextItemSelected(item);
-            }
-        }
-        return super.onContextItemSelected(item);
+        copy.setOnClickListener(view -> {
+            DBActionHandler.handleCopyAction(context, note.text);
+            bottomSheetDialog.dismiss();
+        });
+
+        restore.setOnClickListener(view -> {
+            DBActionHandler.handleRestoreAction(context, note);
+            bottomSheetDialog.dismiss();
+        });
+
+        delete.setOnClickListener(view -> {
+            DBActionHandler.handleDeleteAction(context, note);
+            bottomSheetDialog.dismiss();
+        });
+
+        bottomSheetDialog.show();
     }
 
     @Override
