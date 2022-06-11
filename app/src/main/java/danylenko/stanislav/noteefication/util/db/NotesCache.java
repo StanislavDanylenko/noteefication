@@ -1,6 +1,7 @@
 package danylenko.stanislav.noteefication.util.db;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import danylenko.stanislav.noteefication.NoteeficationApplication;
@@ -11,16 +12,21 @@ import danylenko.stanislav.noteefication.db.Status;
 
 public final class NotesCache {
 
-    private static final NoteDao NOTE_DAO = NoteeficationApplication.getInstance().getDatabase().noteDao();
+    private final NoteDao NOTE_DAO;
 
-    private NotesCache() {}
+    private final List<Note> ACTIVE_NOTES;
+    private final List<Note> HISTORY_NOTES;
 
-    private static final List<Note> ACTIVE_NOTES = new ArrayList<>();
-    private static final List<Note> HISTORY_NOTES = new ArrayList<>();
+    private final List<AppReceiver> APP_RECEIVERS = new ArrayList<>();
 
-    private static final List<AppReceiver> APP_RECEIVERS = new ArrayList<>();
 
-    public static void invalidateCaches() {
+    public NotesCache() {
+        NOTE_DAO = NoteeficationApplication.getInstance().getDatabase().noteDao();
+        ACTIVE_NOTES = Collections.synchronizedList(new ArrayList<>());
+        HISTORY_NOTES = Collections.synchronizedList(new ArrayList<>());
+    }
+
+    public void invalidateCaches() {
         ACTIVE_NOTES.clear();
         HISTORY_NOTES.clear();
 
@@ -28,54 +34,58 @@ public final class NotesCache {
         HISTORY_NOTES.addAll(NOTE_DAO.getByStatus(Status.DONE.getValue()));
     }
 
-    public static void updateListByNote(Note note) {
+    public void updateBoth() {
+        invalidateCaches();
+        push();
+    }
+
+    public void updateListByNote(Note note) {
         /*if (note.status == Status.ACTUAL) {
             updateActive();
         } else {
             updateHistory();
-        }*/
-        invalidateCaches();
-        push();
+        }
+        push();*/
+        updateBoth();
     }
 
-    public static void updateByStatus(Status status) {
+    public void updateByStatus(Status status) {
         /*if (status == Status.ACTUAL) {
             updateActive();
         } else {
             updateHistory();
-        }*/
-        invalidateCaches();
-        push();
+        }
+        push();*/
+        updateBoth();
     }
 
-    private static void updateActive() {
+    private void updateActive() {
         List<Note> byStatus = NOTE_DAO.getByStatus(Status.ACTUAL.getValue());
         ACTIVE_NOTES.clear();
         ACTIVE_NOTES.addAll(byStatus);
     }
 
-    private static void updateHistory() {
+    private void updateHistory() {
         List<Note> byStatus = NOTE_DAO.getByStatus(Status.DONE.getValue());
         HISTORY_NOTES.clear();
         HISTORY_NOTES.addAll(byStatus);
     }
 
-    public static List<Note> getActiveNotesList() {
+    public List<Note> getActiveNotesList() {
         return ACTIVE_NOTES;
     }
 
-    public static List<Note> getHistoryNotesList() {
+    public List<Note> getHistoryNotesList() {
         return HISTORY_NOTES;
     }
 
-    public static void registerReceiver(AppReceiver receiver) {
+    public void registerReceiver(AppReceiver receiver) {
         APP_RECEIVERS.add(receiver);
     }
 
-    private static void push() {
+    private void push() {
         for (AppReceiver appReceiver : APP_RECEIVERS) {
             appReceiver.receive();
         }
     }
-
 }

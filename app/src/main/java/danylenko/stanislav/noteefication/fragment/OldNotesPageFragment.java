@@ -15,13 +15,13 @@ import android.widget.TextView;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
+import danylenko.stanislav.noteefication.NoteeficationApplication;
 import danylenko.stanislav.noteefication.customreceiver.AppReceiver;
 import danylenko.stanislav.noteefication.tab.OnItemClickListener;
 import danylenko.stanislav.noteefication.util.db.DBActionHandler;
 import danylenko.stanislav.noteefication.R;
 import danylenko.stanislav.noteefication.db.Note;
 import danylenko.stanislav.noteefication.tab.NoteAdapter;
-import danylenko.stanislav.noteefication.util.db.NotesCache;
 
 
 public class OldNotesPageFragment extends Fragment implements AppReceiver {
@@ -41,7 +41,7 @@ public class OldNotesPageFragment extends Fragment implements AppReceiver {
         LinearLayout view = (LinearLayout) inflater.inflate(R.layout.fragment_old_notes, container, false);
         RecyclerView listView = view.findViewById(R.id.listView);
         context = getContext();
-        noteAdapter = new NoteAdapter(NotesCache.getHistoryNotesList(), getContext(),
+        noteAdapter = new NoteAdapter(NoteeficationApplication.getInstance().getNotesCache().getHistoryNotesList(), getContext(),
                 new OnItemClickListener() {
                     @Override
                     public void onMenuClick(Note item) {
@@ -93,7 +93,7 @@ public class OldNotesPageFragment extends Fragment implements AppReceiver {
 
     @Override
     public void register() {
-        NotesCache.registerReceiver(this);
+        NoteeficationApplication.getInstance().getNotesCache().registerReceiver(this);
     }
 
 }

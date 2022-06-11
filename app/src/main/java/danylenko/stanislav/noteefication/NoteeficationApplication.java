@@ -4,12 +4,14 @@ import android.app.Application;
 import androidx.room.Room;
 
 import danylenko.stanislav.noteefication.db.AppDatabase;
+import danylenko.stanislav.noteefication.util.db.NotesCache;
 
 public class NoteeficationApplication extends Application {
 
     private static NoteeficationApplication instance;
 
     private AppDatabase database;
+    private NotesCache notesCache;
 
     @Override
     public void onCreate() {
@@ -20,6 +22,7 @@ public class NoteeficationApplication extends Application {
                 .allowMainThreadQueries()
                 .fallbackToDestructiveMigration()
                 .build();
+        notesCache = new NotesCache();
     }
 
     public static NoteeficationApplication getInstance() {
@@ -30,7 +33,7 @@ public class NoteeficationApplication extends Application {
         return database;
     }
 
-
-
-
+    public NotesCache getNotesCache() {
+        return notesCache;
+    }
 }

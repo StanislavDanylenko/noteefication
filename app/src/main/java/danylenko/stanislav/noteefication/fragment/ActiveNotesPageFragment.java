@@ -15,13 +15,13 @@ import android.widget.TextView;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
+import danylenko.stanislav.noteefication.NoteeficationApplication;
 import danylenko.stanislav.noteefication.R;
 import danylenko.stanislav.noteefication.customreceiver.AppReceiver;
 import danylenko.stanislav.noteefication.db.Note;
 import danylenko.stanislav.noteefication.tab.NoteAdapter;
 import danylenko.stanislav.noteefication.tab.OnItemClickListener;
 import danylenko.stanislav.noteefication.util.db.DBActionHandler;
-import danylenko.stanislav.noteefication.util.db.NotesCache;
 import danylenko.stanislav.noteefication.util.modal.ModalUtils;
 import danylenko.stanislav.noteefication.util.notification.NotificationUtils;
 
@@ -42,7 +42,7 @@ public class ActiveNotesPageFragment extends Fragment implements AppReceiver {
         LinearLayout view = (LinearLayout) inflater.inflate(R.layout.fragment_active_notes, container, false);
         RecyclerView listView = view.findViewById(R.id.listView);
         context = getContext();
-        noteAdapter = new NoteAdapter(NotesCache.getActiveNotesList(), context,
+        noteAdapter = new NoteAdapter(NoteeficationApplication.getInstance().getNotesCache().getActiveNotesList(), context,
                 new OnItemClickListener() {
                     @Override
                     public void onMenuClick(Note item) {
@@ -103,6 +103,6 @@ public class ActiveNotesPageFragment extends Fragment implements AppReceiver {
 
     @Override
     public void register() {
-        NotesCache.registerReceiver(this);
+        NoteeficationApplication.getInstance().getNotesCache().registerReceiver(this);
     }
 }
