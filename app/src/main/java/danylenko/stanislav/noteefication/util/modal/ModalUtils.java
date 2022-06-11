@@ -22,7 +22,7 @@ public final class ModalUtils {
     }
 
     public static void showDialog(final Context context, final Note note, final Intent intent) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.EditDialogTheme);
         builder.setTitle(EDIT_NOTE);
 
         LayoutInflater layoutInflater = LayoutInflater.from(context);

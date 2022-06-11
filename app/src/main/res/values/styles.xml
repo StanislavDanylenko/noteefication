@@ -17,4 +17,11 @@
         <item name="android:backgroundDimEnabled">false</item>
     </style>
 
+    <style name="EditDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:background">@color/colorAppBar</item>
+        <item name="android:textColor">@color/colorText</item>
+        <item name="android:textColorHint">@color/colorText</item>
+
+    </style>
+
 </resources>
