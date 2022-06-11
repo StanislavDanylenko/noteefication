@@ -1,7 +1,6 @@
 package danylenko.stanislav.noteefication.util.db;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import danylenko.stanislav.noteefication.NoteeficationApplication;
@@ -12,6 +11,8 @@ import danylenko.stanislav.noteefication.db.Status;
 
 public final class NotesCache {
 
+    private static volatile NotesCache instance;
+
     private final NoteDao NOTE_DAO;
 
     private final List<Note> ACTIVE_NOTES;
@@ -19,11 +20,23 @@ public final class NotesCache {
 
     private final List<AppReceiver> APP_RECEIVERS = new ArrayList<>();
 
+    public static NotesCache getInstance() {
+        NotesCache result = instance;
+        if (result != null) {
+            return result;
+        }
+        synchronized(NotesCache.class) {
+            if (instance == null) {
+                instance = new NotesCache();
+            }
+            return instance;
+        }
+    }
 
     public NotesCache() {
         NOTE_DAO = NoteeficationApplication.getInstance().getDatabase().noteDao();
-        ACTIVE_NOTES = Collections.synchronizedList(new ArrayList<>());
-        HISTORY_NOTES = Collections.synchronizedList(new ArrayList<>());
+        ACTIVE_NOTES = new ArrayList<>();
+        HISTORY_NOTES = new ArrayList<>();
     }
 
     public void invalidateCaches() {

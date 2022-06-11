@@ -4,7 +4,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
-import danylenko.stanislav.noteefication.NoteeficationApplication;
+import danylenko.stanislav.noteefication.util.db.NotesCache;
 
 public class FragmentsPagerAdapter extends FragmentPagerAdapter {
 
@@ -15,7 +15,7 @@ public class FragmentsPagerAdapter extends FragmentPagerAdapter {
 
     public FragmentsPagerAdapter(FragmentManager fragmentManager) {
         super(fragmentManager);
-        NoteeficationApplication.getInstance().getNotesCache().invalidateCaches();
+        NotesCache.getInstance().invalidateCaches();
 //        noteDao = NoteeficationApplication.getInstance().getDatabase().noteDao();
     }
 

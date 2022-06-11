@@ -22,6 +22,7 @@ import static danylenko.stanislav.noteefication.constants.NoteeficationApplicati
 public final class DBActionHandler {
 
     private static NoteDao noteDao = NoteeficationApplication.getInstance().getDatabase().noteDao();
+    private static NotesCache notesCache = NotesCache.getInstance();
 
     private DBActionHandler() {}
 
@@ -31,7 +32,7 @@ public final class DBActionHandler {
         note.text = editedText;
 
         noteDao.update(note);
-        NoteeficationApplication.getInstance().getNotesCache().updateListByNote(note);
+        notesCache.updateListByNote(note);
 
         NotificationUtils.showNotification(context, editedText, intent, notificationId);
 //        NotificationUtils.restartTabsActivity(context);
@@ -44,7 +45,7 @@ public final class DBActionHandler {
         note.status = Status.ACTUAL;
 
         int id = (int) noteDao.insert(note);
-        NoteeficationApplication.getInstance().getNotesCache().updateListByNote(note);
+        notesCache.updateListByNote(note);
 
         NotificationUtils.showNotification(context, value, intent, id);
     }
@@ -66,21 +67,21 @@ public final class DBActionHandler {
         note.creationDate = new Date();
 
         noteDao.update(note);
-        NoteeficationApplication.getInstance().getNotesCache().updateListByNote(note);
+        notesCache.updateListByNote(note);
 
 //        NotificationUtils.restartTabsActivity(context);
     }
 
     public static void handleDeleteAction(Context context, Note note) {
         noteDao.delete(note);
-        NoteeficationApplication.getInstance().getNotesCache().updateListByNote(note);
+        notesCache.updateListByNote(note);
 
 //        NotificationUtils.restartTabsActivity(context);
     }
 
     public static void handleCleanHistoryAction() {
         noteDao.deleteByStatus(Status.DONE.getValue());
-        NoteeficationApplication.getInstance().getNotesCache().updateByStatus(Status.DONE);
+        notesCache.updateByStatus(Status.DONE);
     }
 
     public static void handleAllCurrentAction(Context context) {
@@ -93,7 +94,7 @@ public final class DBActionHandler {
             note.creationDate = new Date();
             noteDao.update(note);
         }
-        NoteeficationApplication.getInstance().getNotesCache().updateByStatus(Status.ACTUAL);
+        notesCache.updateByStatus(Status.ACTUAL);
     }
 
     public static void handleShowAllCurrentAction(Context context) {
@@ -112,7 +113,7 @@ public final class DBActionHandler {
         note.status = Status.ACTUAL;
 
         noteDao.update(note);
-        NoteeficationApplication.getInstance().getNotesCache().updateListByNote(note);
+        notesCache.updateListByNote(note);
 
         NotificationUtils.showNotification(context, note.text, new Intent(context, MainActivity.class), note.id);
 //        NotificationUtils.restartTabsActivity(context);
