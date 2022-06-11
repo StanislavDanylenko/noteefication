@@ -22,6 +22,7 @@
             android:textSize="14sp"
             android:gravity="center"
             android:layout_weight="1"
+            android:background="?selectableItemBackgroundBorderless"
             android:singleLine="false"/>
 
         <LinearLayout

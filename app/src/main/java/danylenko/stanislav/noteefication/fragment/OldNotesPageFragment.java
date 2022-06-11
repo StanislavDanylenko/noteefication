@@ -11,10 +11,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import danylenko.stanislav.noteefication.customreceiver.AppReceiver;
+import danylenko.stanislav.noteefication.tab.OnItemClickListener;
 import danylenko.stanislav.noteefication.util.db.DBActionHandler;
 import danylenko.stanislav.noteefication.R;
 import danylenko.stanislav.noteefication.db.Note;
@@ -40,7 +42,17 @@ public class OldNotesPageFragment extends Fragment implements AppReceiver {
         RecyclerView listView = view.findViewById(R.id.listView);
         context = getContext();
         noteAdapter = new NoteAdapter(NotesCache.getHistoryNotesList(), getContext(),
-                this::showBottomSheetOldDialog);
+                new OnItemClickListener() {
+                    @Override
+                    public void onMenuClick(Note item) {
+                        showBottomSheetOldDialog(item);
+                    }
+
+                    @Override
+                    public void onEmojiClick(Note item, TextView textView) {
+                        // do nothing
+                    }
+                });
         listView.setAdapter(noteAdapter);
 
         listView.setLayoutManager(new LinearLayoutManager(context));

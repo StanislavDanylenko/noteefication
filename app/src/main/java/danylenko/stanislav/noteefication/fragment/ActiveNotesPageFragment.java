@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
@@ -18,9 +19,11 @@ import danylenko.stanislav.noteefication.R;
 import danylenko.stanislav.noteefication.customreceiver.AppReceiver;
 import danylenko.stanislav.noteefication.db.Note;
 import danylenko.stanislav.noteefication.tab.NoteAdapter;
+import danylenko.stanislav.noteefication.tab.OnItemClickListener;
 import danylenko.stanislav.noteefication.util.db.DBActionHandler;
 import danylenko.stanislav.noteefication.util.db.NotesCache;
 import danylenko.stanislav.noteefication.util.modal.ModalUtils;
+import danylenko.stanislav.noteefication.util.notification.NotificationUtils;
 
 
 public class ActiveNotesPageFragment extends Fragment implements AppReceiver {
@@ -40,7 +43,18 @@ public class ActiveNotesPageFragment extends Fragment implements AppReceiver {
         RecyclerView listView = view.findViewById(R.id.listView);
         context = getContext();
         noteAdapter = new NoteAdapter(NotesCache.getActiveNotesList(), context,
-                this::showBottomSheetActiveDialog);
+                new OnItemClickListener() {
+                    @Override
+                    public void onMenuClick(Note item) {
+                        showBottomSheetActiveDialog(item);
+                    }
+
+                    @Override
+                    public void onEmojiClick(Note item, TextView textView) {
+                        String emoji = NotificationUtils.randomEmoji();
+                        textView.setText(emoji);
+                    }
+                });
         listView.setAdapter(noteAdapter);
 
         listView.setLayoutManager(new LinearLayoutManager(context));

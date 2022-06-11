@@ -70,7 +70,8 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
             String dateString = dateFormat.format(note.creationDate);
             date.setText(dateString);
 
-            menuButton.setOnClickListener(view -> listener.onItemClick(note));
+            menuButton.setOnClickListener(view -> listener.onMenuClick(note));
+            smile.setOnClickListener(view -> listener.onEmojiClick(note, smile));
         }
     }
 }

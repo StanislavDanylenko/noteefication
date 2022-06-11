@@ -124,7 +124,7 @@ public final class NotificationUtils {
         notificationManager.notify(id, mBuilder.build());
     }
 
-    private static String randomEmoji() {
+    public static String randomEmoji() {
         int position = RANDOM.nextInt(EMOJI.length);
         return EMOJI[position];
     }
