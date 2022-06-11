@@ -14,8 +14,6 @@ import android.widget.LinearLayout;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
-import java.util.List;
-
 import danylenko.stanislav.noteefication.R;
 import danylenko.stanislav.noteefication.customreceiver.AppReceiver;
 import danylenko.stanislav.noteefication.db.Note;
@@ -27,7 +25,6 @@ import danylenko.stanislav.noteefication.util.modal.ModalUtils;
 
 public class ActiveNotesPageFragment extends Fragment implements AppReceiver {
 
-    private List<Note> notes;
     private NoteAdapter noteAdapter;
     private Context context;
 
@@ -41,9 +38,9 @@ public class ActiveNotesPageFragment extends Fragment implements AppReceiver {
                              Bundle savedInstanceState) {
         LinearLayout view = (LinearLayout) inflater.inflate(R.layout.fragment_active_notes, container, false);
         RecyclerView listView = view.findViewById(R.id.listView);
-        notes = NotesCache.getActiveNotesList();
         context = getContext();
-        noteAdapter = new NoteAdapter(notes, context, this::showBottomSheetActiveDialog);
+        noteAdapter = new NoteAdapter(NotesCache.getActiveNotesList(), context,
+                this::showBottomSheetActiveDialog);
         listView.setAdapter(noteAdapter);
 
         listView.setLayoutManager(new LinearLayoutManager(context));
