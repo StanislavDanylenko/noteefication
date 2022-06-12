@@ -42,6 +42,6 @@ public class NotesTabActivity extends AppCompatActivity {
     }
 
     public void cleanAllCurrent(View view) {
-        DBActionHandler.handleAllCurrentAction(this);
+        DBActionHandler.handleMoveAllActiveToDoneAction(this);
     }
 }

@@ -92,14 +92,14 @@ public final class DBActionHandler {
         notesCache.updateByStatus(Status.DONE);
     }
 
-    public static void handleAllCurrentAction(Context context) {
+    public static void handleMoveAllActiveToDoneAction(Context context) {
         List<Note> actual = noteDao.getByStatus(Status.ACTUAL.getValue());
 
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         for (Note note : actual) {
             notificationManager.cancel(note.id);
             note.status = Status.DONE;
-            note.creationDate = new Date();
+            note.finishDate = new Date();
             noteDao.update(note);
         }
         notesCache.updateBoth();
@@ -117,7 +117,6 @@ public final class DBActionHandler {
     }
 
     public static void handleRestoreAction(Context context, Note note) {
-        note.creationDate = new Date();
         note.status = Status.ACTUAL;
         note.finishDate = new Date(0);
 
