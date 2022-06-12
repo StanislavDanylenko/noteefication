@@ -16,6 +16,8 @@ public class Note implements Serializable {
     @PrimaryKey(autoGenerate = true)
     public int id;
 
+    public String smile;
+
     public String text;
 
     @TypeConverters({StatusConverter.class})
@@ -23,5 +25,8 @@ public class Note implements Serializable {
 
     @TypeConverters({DateConverter.class})
     public Date creationDate;
+
+    @TypeConverters({DateConverter.class})
+    public Date finishDate;
 
 }

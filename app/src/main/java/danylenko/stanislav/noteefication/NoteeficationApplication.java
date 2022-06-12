@@ -1,5 +1,8 @@
 package danylenko.stanislav.noteefication;
 
+import static danylenko.stanislav.noteefication.db.AppDatabase.MIGRATION_2_3;
+import static danylenko.stanislav.noteefication.db.AppDatabase.MIGRATION_3_4;
+
 import android.app.Application;
 import androidx.room.Room;
 
@@ -18,6 +21,7 @@ public class NoteeficationApplication extends Application {
         database = Room.databaseBuilder(getApplicationContext(),
                 AppDatabase.class, "database")
                 .allowMainThreadQueries()
+                .addMigrations(MIGRATION_2_3, MIGRATION_3_4)
                 .fallbackToDestructiveMigration()
                 .build();
     }

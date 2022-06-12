@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.text.DateFormat;
+import java.util.Date;
 import java.util.List;
 
 import danylenko.stanislav.noteefication.R;
@@ -18,13 +19,15 @@ import danylenko.stanislav.noteefication.db.Note;
 public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder> {
 
     private final List<Note> noteList;
-    private final Context context;
     private final OnItemClickListener listener;
+    private final DateFormat dateFormat;
+    private final Date defaultDate;
 
     public NoteAdapter(List<Note> noteList, Context context, OnItemClickListener listener) {
         this.noteList = noteList;
-        this.context = context;
         this.listener = listener;
+        this.dateFormat = android.text.format.DateFormat.getDateFormat(context);
+        this.defaultDate = new Date(1970, 1, 1);
     }
 
     @NonNull
@@ -62,16 +65,24 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
         }
 
         public void bind(final Note note, final OnItemClickListener listener) {
-            smile.setText("\uD83D\uDE0E");
-
+            smile.setText(note.smile);
             value.setText(note.text);
 
-            DateFormat dateFormat = android.text.format.DateFormat.getDateFormat(context);
-            String dateString = dateFormat.format(note.creationDate);
-            date.setText(dateString);
+            String creationDateString = getDateString(note.creationDate, "sometime");
+            String finishDateString = getDateString(note.finishDate, "now");
+
+            date.setText(creationDateString + " - " + finishDateString);
 
             menuButton.setOnClickListener(view -> listener.onMenuClick(note));
             smile.setOnClickListener(view -> listener.onEmojiClick(note, smile));
+        }
+
+        private String getDateString(Date value, String defaultValue) {
+            if (value.getTime() != defaultDate.getTime()) {
+                return dateFormat.format(value);
+            } else {
+                return defaultValue;
+            }
         }
     }
 }
