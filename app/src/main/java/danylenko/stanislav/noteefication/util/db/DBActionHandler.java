@@ -89,7 +89,7 @@ public final class DBActionHandler {
             note.creationDate = new Date();
             noteDao.update(note);
         }
-        notesCache.updateByStatus(Status.ACTUAL);
+        notesCache.updateBoth();
     }
 
     public static void handleShowAllCurrentAction(Context context) {
