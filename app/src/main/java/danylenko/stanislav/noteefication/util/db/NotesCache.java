@@ -1,7 +1,9 @@
 package danylenko.stanislav.noteefication.util.db;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import danylenko.stanislav.noteefication.NoteeficationApplication;
 import danylenko.stanislav.noteefication.customreceiver.AppReceiver;
@@ -18,7 +20,7 @@ public final class NotesCache {
     private final List<Note> ACTIVE_NOTES;
     private final List<Note> HISTORY_NOTES;
 
-    private final List<AppReceiver> APP_RECEIVERS = new ArrayList<>();
+    private final Map<Status, AppReceiver> RECEIVERS = new HashMap<>();
 
     public static NotesCache getInstance() {
         NotesCache result = instance;
@@ -49,27 +51,28 @@ public final class NotesCache {
 
     public void updateBoth() {
         invalidateCaches();
-        push();
+        pushActive();
+        pushOld();
     }
 
     public void updateListByNote(Note note) {
-        /*if (note.status == Status.ACTUAL) {
+        if (note.status == Status.ACTUAL) {
             updateActive();
+            pushActive();
         } else {
             updateHistory();
+            pushOld();
         }
-        push();*/
-        updateBoth();
     }
 
     public void updateByStatus(Status status) {
-        /*if (status == Status.ACTUAL) {
+        if (status == Status.ACTUAL) {
             updateActive();
+            pushActive();
         } else {
             updateHistory();
+            pushOld();
         }
-        push();*/
-        updateBoth();
     }
 
     private void updateActive() {
@@ -92,13 +95,21 @@ public final class NotesCache {
         return HISTORY_NOTES;
     }
 
-    public void registerReceiver(AppReceiver receiver) {
-        APP_RECEIVERS.add(receiver);
+    public void registerReceiver(AppReceiver receiver, Status status) {
+        RECEIVERS.put(status, receiver);
     }
 
-    private void push() {
-        for (AppReceiver appReceiver : APP_RECEIVERS) {
-            appReceiver.receive();
+    private void pushActive() {
+        AppReceiver actualReceiver = RECEIVERS.get(Status.ACTUAL);
+        if (actualReceiver != null) {
+            actualReceiver.receive();
+        }
+    }
+
+    private void pushOld() {
+        AppReceiver oldReceiver = RECEIVERS.get(Status.DONE);
+        if (oldReceiver != null) {
+            oldReceiver.receive();
         }
     }
 }

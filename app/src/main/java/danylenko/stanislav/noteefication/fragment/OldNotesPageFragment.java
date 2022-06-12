@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import danylenko.stanislav.noteefication.customreceiver.AppReceiver;
+import danylenko.stanislav.noteefication.db.Status;
 import danylenko.stanislav.noteefication.tab.OnItemClickListener;
 import danylenko.stanislav.noteefication.util.db.DBActionHandler;
 import danylenko.stanislav.noteefication.R;
@@ -93,7 +94,7 @@ public class OldNotesPageFragment extends Fragment implements AppReceiver {
 
     @Override
     public void register() {
-        NotesCache.getInstance().registerReceiver(this);
+        NotesCache.getInstance().registerReceiver(this, Status.DONE);
     }
 
 }

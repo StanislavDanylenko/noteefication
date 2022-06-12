@@ -35,7 +35,6 @@ public final class DBActionHandler {
         notesCache.updateListByNote(note);
 
         NotificationUtils.showNotification(context, editedText, intent, notificationId);
-//        NotificationUtils.restartTabsActivity(context);
     }
 
     public static void handleAddAction(Context context, String value, Intent intent) {
@@ -67,7 +66,7 @@ public final class DBActionHandler {
         note.creationDate = new Date();
 
         noteDao.update(note);
-        notesCache.updateListByNote(note);
+        notesCache.updateBoth();
     }
 
     public static void handleDeleteAction(Note note) {
@@ -109,7 +108,7 @@ public final class DBActionHandler {
         note.status = Status.ACTUAL;
 
         noteDao.update(note);
-        notesCache.updateListByNote(note);
+        notesCache.updateBoth();
 
         NotificationUtils.showNotification(context, note.text, new Intent(context, MainActivity.class), note.id);
     }
