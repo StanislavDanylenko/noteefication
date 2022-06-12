@@ -41,6 +41,7 @@ public final class DBActionHandler {
     public static void handleAddAction(Context context, String value, Intent intent) {
         Note note = new Note();
         note.creationDate = new Date();
+        note.finishDate = new Date(0);
         note.text = value;
         note.status = Status.ACTUAL;
         note.smile = NotificationUtils.randomEmoji();

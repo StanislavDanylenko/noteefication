@@ -14,7 +14,7 @@ public abstract class AppDatabase extends RoomDatabase {
     public static final Migration MIGRATION_2_3 = new Migration(2, 3) {
         @Override
         public void migrate(final SupportSQLiteDatabase database) {
-            database.execSQL("ALTER TABLE Note ADD COLUMN smile TEXT NOT NULL DEFAULT '';");
+            database.execSQL("ALTER TABLE Note ADD COLUMN smile TEXT DEFAULT '';");
             database.execSQL("ALTER TABLE Note ADD COLUMN finishDate INTEGER DEFAULT 0;");
         }
     };
