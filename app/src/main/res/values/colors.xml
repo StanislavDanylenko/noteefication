@@ -12,4 +12,7 @@
     <color name="colorAppBar">#4C4C4C</color>
     <color name="colorMenu">#717171</color>
     <color name="colorText">#E8E8E8</color>
+
+    <color name="itemDefault">#4C4C4C</color>
+    <color name="itemPressed">#434343</color>
 </resources>
