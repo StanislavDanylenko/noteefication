@@ -106,10 +106,10 @@ public final class NotificationUtils {
 
             mBuilder.addAction(action);
             mBuilder.setLargeIcon(BitmapFactory.decodeResource(context.getResources(),
-                    R.mipmap.pushpinsm));
+                    R.mipmap.pin_512_cropped));
         } else {
             mBuilder.setLargeIcon(BitmapFactory.decodeResource(context.getResources(),
-                    R.mipmap.ic_launcher_pin));
+                    R.mipmap.ic_launcher));
         }
 
 
