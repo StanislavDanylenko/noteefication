@@ -16,10 +16,6 @@ import static danylenko.stanislav.noteefication.constants.NoteeficationApplicati
 
 public class NotesTabActivity extends AppCompatActivity {
 
-//    private static boolean restart = false;
-
-    private ViewPager viewPager;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,7 +23,7 @@ public class NotesTabActivity extends AppCompatActivity {
 
         getSupportActionBar().hide();
 
-        viewPager = findViewById(R.id.viewpager);
+        ViewPager viewPager = findViewById(R.id.viewpager);
         FragmentsPagerAdapter adapter = new FragmentsPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(adapter);
 
@@ -43,37 +39,9 @@ public class NotesTabActivity extends AppCompatActivity {
 
     public void cleanHistory(View view) {
         DBActionHandler.handleCleanHistoryAction();
-//        recreateActivity();
     }
 
     public void cleanAllCurrent(View view) {
         DBActionHandler.handleAllCurrentAction(this);
-//        recreateActivity();
-    }
-
-/*    private void recreateActivity() {
-        finish();
-
-        Intent selfIntent = getIntent();
-        int tabIndex = viewPager.getCurrentItem();
-        selfIntent.putExtra(TAB_INDEX, tabIndex);
-        startActivity(selfIntent);
-    }*/
-
-/*    public static boolean isRestart() {
-        return restart;
-    }*/
-
-/*    public static void setRestart(boolean restart) {
-        NotesTabActivity.restart = restart;
-    }*/
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        /*if (restart) {
-            restart = false;
-            recreateActivity();
-        }*/
     }
 }

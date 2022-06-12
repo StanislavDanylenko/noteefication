@@ -128,22 +128,4 @@ public final class NotificationUtils {
         int position = RANDOM.nextInt(EMOJI.length);
         return EMOJI[position];
     }
-
-
-/*    public static void restartTabsActivity(Context context) {
-        ActivityManager manager = (ActivityManager) context.getSystemService(ACTIVITY_SERVICE);
-        List<ActivityManager.RunningTaskInfo> runningTaskInfo = manager.getRunningTasks(1);
-        if (!runningTaskInfo.isEmpty()) {
-            ComponentName componentInfo = runningTaskInfo.get(0).topActivity;
-            boolean equals = componentInfo.getClassName().equals(NotesTabActivity.class.getName());
-            if (equals) {
-                Intent intent = new Intent(context, NotesTabActivity.class);
-                intent.setFlags(FLAG_ACTIVITY_NEW_TASK);
-                NotesTabActivity.setRestart(true);
-                context.startActivity(intent);
-            }
-        }
-    }*/
-
-
 }

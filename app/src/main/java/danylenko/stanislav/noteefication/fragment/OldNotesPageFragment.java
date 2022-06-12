@@ -79,7 +79,7 @@ public class OldNotesPageFragment extends Fragment implements AppReceiver {
         });
 
         delete.setOnClickListener(view -> {
-            DBActionHandler.handleDeleteAction(context, note);
+            DBActionHandler.handleDeleteAction(note);
             bottomSheetDialog.dismiss();
         });
 

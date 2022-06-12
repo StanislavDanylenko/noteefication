@@ -68,15 +68,11 @@ public final class DBActionHandler {
 
         noteDao.update(note);
         notesCache.updateListByNote(note);
-
-//        NotificationUtils.restartTabsActivity(context);
     }
 
-    public static void handleDeleteAction(Context context, Note note) {
+    public static void handleDeleteAction(Note note) {
         noteDao.delete(note);
         notesCache.updateListByNote(note);
-
-//        NotificationUtils.restartTabsActivity(context);
     }
 
     public static void handleCleanHistoryAction() {
@@ -116,6 +112,5 @@ public final class DBActionHandler {
         notesCache.updateListByNote(note);
 
         NotificationUtils.showNotification(context, note.text, new Intent(context, MainActivity.class), note.id);
-//        NotificationUtils.restartTabsActivity(context);
     }
 }

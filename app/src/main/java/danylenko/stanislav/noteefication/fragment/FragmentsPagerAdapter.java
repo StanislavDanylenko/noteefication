@@ -11,12 +11,10 @@ public class FragmentsPagerAdapter extends FragmentPagerAdapter {
     private static final String[] TAB_TITLES = new String[]{"Active", "Old"};
     private static final int PAGE_COUNT = 2;
 
-//    private final NoteDao noteDao;
 
     public FragmentsPagerAdapter(FragmentManager fragmentManager) {
         super(fragmentManager);
         NotesCache.getInstance().invalidateCaches();
-//        noteDao = NoteeficationApplication.getInstance().getDatabase().noteDao();
     }
 
     @Override
@@ -27,9 +25,9 @@ public class FragmentsPagerAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
         if (position == 0) {
-            return new ActiveNotesPageFragment(); /*ActiveNotesPageFragment.newInstance(noteDao.getByStatus(Status.ACTUAL.getValue()));*/
+            return new ActiveNotesPageFragment();
         } else {
-            return new OldNotesPageFragment(); /*OldNotesPageFragment.newInstance(noteDao.getByStatus(Status.DONE.getValue()));*/
+            return new OldNotesPageFragment();
         }
     }
 

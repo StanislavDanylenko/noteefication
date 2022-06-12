@@ -55,10 +55,10 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
         public NoteViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            value = (TextView) itemView.findViewById(R.id.value);
-            date = (TextView) itemView.findViewById(R.id.date);
-            smile = (TextView) itemView.findViewById(R.id.smile);
-            menuButton = (TextView) itemView.findViewById(R.id.menu);
+            value = itemView.findViewById(R.id.value);
+            date = itemView.findViewById(R.id.date);
+            smile = itemView.findViewById(R.id.smile);
+            menuButton = itemView.findViewById(R.id.menu);
         }
 
         public void bind(final Note note, final OnItemClickListener listener) {
