@@ -18,6 +18,7 @@ import danylenko.stanislav.noteefication.db.Status;
 import danylenko.stanislav.noteefication.util.notification.NotificationUtils;
 
 import static danylenko.stanislav.noteefication.constants.NoteeficationApplicationConstants.COPIED_TO_CLIPBOARD;
+import static danylenko.stanislav.noteefication.constants.NoteeficationApplicationConstants.EMOJI;
 
 public final class DBActionHandler {
 
@@ -42,6 +43,7 @@ public final class DBActionHandler {
         note.creationDate = new Date();
         note.text = value;
         note.status = Status.ACTUAL;
+        note.smile = NotificationUtils.randomEmoji();
 
         int id = (int) noteDao.insert(note);
         notesCache.updateListByNote(note);
@@ -63,7 +65,7 @@ public final class DBActionHandler {
 
         Note note = noteDao.getById(notificationId);
         note.status = Status.DONE;
-        note.creationDate = new Date();
+        note.finishDate = new Date();
 
         noteDao.update(note);
         notesCache.updateBoth();
@@ -106,6 +108,7 @@ public final class DBActionHandler {
     public static void handleRestoreAction(Context context, Note note) {
         note.creationDate = new Date();
         note.status = Status.ACTUAL;
+        note.finishDate = new Date(0);
 
         noteDao.update(note);
         notesCache.updateBoth();

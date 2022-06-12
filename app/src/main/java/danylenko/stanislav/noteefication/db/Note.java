@@ -1,5 +1,6 @@
 package danylenko.stanislav.noteefication.db;
 
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
@@ -14,18 +15,24 @@ import danylenko.stanislav.noteefication.db.converter.StatusConverter;
 public class Note implements Serializable {
 
     @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "id")
     public int id;
 
+    @ColumnInfo(name = "smile")
     public String smile;
 
+    @ColumnInfo(name = "text")
     public String text;
 
+    @ColumnInfo(name = "status")
     @TypeConverters({StatusConverter.class})
     public Status status;
 
+    @ColumnInfo(name = "creationDate")
     @TypeConverters({DateConverter.class})
     public Date creationDate;
 
+    @ColumnInfo(name = "finishDate")
     @TypeConverters({DateConverter.class})
     public Date finishDate;
 

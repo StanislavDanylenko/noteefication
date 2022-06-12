@@ -21,13 +21,11 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
     private final List<Note> noteList;
     private final OnItemClickListener listener;
     private final DateFormat dateFormat;
-    private final Date defaultDate;
 
     public NoteAdapter(List<Note> noteList, Context context, OnItemClickListener listener) {
         this.noteList = noteList;
         this.listener = listener;
         this.dateFormat = android.text.format.DateFormat.getDateFormat(context);
-        this.defaultDate = new Date(1970, 1, 1);
     }
 
     @NonNull
@@ -78,7 +76,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
         }
 
         private String getDateString(Date value, String defaultValue) {
-            if (value.getTime() != defaultDate.getTime()) {
+            if (value.getTime() != 0) {
                 return dateFormat.format(value);
             } else {
                 return defaultValue;
