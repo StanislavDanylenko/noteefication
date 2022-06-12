@@ -40,7 +40,7 @@ public final class NotificationUtils {
     private NotificationUtils() {
     }
 
-    public static void showNotification(Context context, String body, Intent intent, int id) {
+    public static void showNotification(Context context, String body, String smile, Intent intent, int id) {
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
         String channelId = CHANNEL_ID;
@@ -70,7 +70,7 @@ public final class NotificationUtils {
 
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context, channelId)
                 .setSmallIcon(R.drawable.ic_pushpinblack1)
-                .setContentTitle(randomEmoji())
+                .setContentTitle(smile)
                 .setOngoing(true)
                 .setAutoCancel(false)
                 .setColor(ContextCompat.getColor(context, R.color.colorBlack))

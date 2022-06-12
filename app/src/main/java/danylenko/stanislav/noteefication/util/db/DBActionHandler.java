@@ -35,7 +35,7 @@ public final class DBActionHandler {
         noteDao.update(note);
         notesCache.updateListByNote(note);
 
-        NotificationUtils.showNotification(context, editedText, intent, notificationId);
+        NotificationUtils.showNotification(context, editedText, note.smile, intent, notificationId);
     }
 
     public static void handleAddAction(Context context, String value, Intent intent) {
@@ -49,7 +49,7 @@ public final class DBActionHandler {
         int id = (int) noteDao.insert(note);
         notesCache.updateListByNote(note);
 
-        NotificationUtils.showNotification(context, value, intent, id);
+        NotificationUtils.showNotification(context, value, note.smile, intent, id);
     }
 
     public static void handleCopyAction(Context context, String value) {
@@ -98,12 +98,12 @@ public final class DBActionHandler {
     public static void handleShowAllCurrentAction(Context context) {
         List<Note> allTheNotes = noteDao.getByStatus(Status.ACTUAL.getValue());
         for (Note note : allTheNotes) {
-            NotificationUtils.showNotification(context, note.text, new Intent(context, MainActivity.class), note.id);
+            NotificationUtils.showNotification(context, note.text, note.smile, new Intent(context, MainActivity.class), note.id);
         }
     }
 
     public static void handleShowAction(Context context, Note note) {
-        NotificationUtils.showNotification(context, note.text, new Intent(context, MainActivity.class), note.id);
+        NotificationUtils.showNotification(context, note.text, note.smile, new Intent(context, MainActivity.class), note.id);
     }
 
     public static void handleRestoreAction(Context context, Note note) {
@@ -114,6 +114,6 @@ public final class DBActionHandler {
         noteDao.update(note);
         notesCache.updateBoth();
 
-        NotificationUtils.showNotification(context, note.text, new Intent(context, MainActivity.class), note.id);
+        NotificationUtils.showNotification(context, note.text, note.smile, new Intent(context, MainActivity.class), note.id);
     }
 }
