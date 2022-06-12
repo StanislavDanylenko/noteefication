@@ -38,6 +38,16 @@ public final class DBActionHandler {
         NotificationUtils.showNotification(context, editedText, note.smile, intent, notificationId);
     }
 
+    public static void handleSmileAction(Context context, int notificationId, String smile, Intent intent) {
+        Note note = noteDao.getById(notificationId);
+        note.smile = smile;
+
+        noteDao.update(note);
+        notesCache.updateListByNote(note);
+
+        NotificationUtils.showNotification(context, note.text, note.smile, intent, notificationId);
+    }
+
     public static void handleAddAction(Context context, String value, Intent intent) {
         Note note = new Note();
         note.creationDate = new Date();

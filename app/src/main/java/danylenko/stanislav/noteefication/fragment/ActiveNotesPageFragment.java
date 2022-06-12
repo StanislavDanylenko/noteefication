@@ -51,9 +51,10 @@ public class ActiveNotesPageFragment extends Fragment implements AppReceiver {
                     }
 
                     @Override
-                    public void onEmojiClick(Note item, TextView textView) {
+                    public void onEmojiClick(Note item, TextView emojiView) {
                         String emoji = NotificationUtils.randomEmoji();
-                        textView.setText(emoji);
+                        DBActionHandler.handleSmileAction(context, item.id, emoji, getActivity().getIntent());
+                        emojiView.setText(emoji);
                     }
                 });
         listView.setAdapter(noteAdapter);
