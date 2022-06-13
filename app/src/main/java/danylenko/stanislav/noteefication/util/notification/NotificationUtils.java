@@ -6,6 +6,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
+import android.graphics.Paint;
 import android.os.Build;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.RemoteInput;
@@ -36,6 +37,7 @@ import static danylenko.stanislav.noteefication.constants.NoteeficationApplicati
 public final class NotificationUtils {
 
     private static final Random RANDOM = new Random();
+    private static final Paint paint = new Paint();
 
     private NotificationUtils() {
     }
@@ -125,7 +127,17 @@ public final class NotificationUtils {
     }
 
     public static String randomEmoji() {
-        int position = RANDOM.nextInt(EMOJI.length);
-        return EMOJI[position];
+        String emoji;
+        int position;
+        do {
+            position = RANDOM.nextInt(EMOJI.length);
+            emoji = EMOJI[position];
+        } while (!emojiRenderable(emoji));
+        return emoji;
+    }
+
+    private static boolean emojiRenderable(String emoji) {
+        float width = paint.measureText(emoji);
+        return width > 7;
     }
 }
