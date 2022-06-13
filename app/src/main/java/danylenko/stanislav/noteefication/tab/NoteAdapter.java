@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -51,7 +52,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
         private TextView value;
         private TextView date;
         private TextView smile;
-        private TextView menuButton;
+        private ImageButton menuButton;
 
         public NoteViewHolder(@NonNull View itemView) {
             super(itemView);
