@@ -10,6 +10,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -23,7 +25,6 @@ import danylenko.stanislav.noteefication.tab.NoteAdapter;
 import danylenko.stanislav.noteefication.tab.OnItemClickListener;
 import danylenko.stanislav.noteefication.util.db.DBActionHandler;
 import danylenko.stanislav.noteefication.util.db.NotesCache;
-import danylenko.stanislav.noteefication.util.modal.ModalUtils;
 import danylenko.stanislav.noteefication.util.notification.NotificationUtils;
 
 
@@ -86,7 +87,7 @@ public class ActiveNotesPageFragment extends Fragment implements AppReceiver {
         });
 
         edit.setOnClickListener(view -> {
-            ModalUtils.showDialog(context, note, getActivity().getIntent());
+            showEditDialog(note);
             bottomSheetDialog.dismiss();
         });
 
@@ -94,6 +95,29 @@ public class ActiveNotesPageFragment extends Fragment implements AppReceiver {
             DBActionHandler.handleRemoveAction(context, note.id);
             bottomSheetDialog.dismiss();
         });
+
+        bottomSheetDialog.show();
+    }
+
+    private void showEditDialog(Note note) {
+        final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(context);
+        bottomSheetDialog.setContentView(R.layout.dialog_edit_bottom);
+
+        EditText value = bottomSheetDialog.findViewById(R.id.value);
+        Button okButton = bottomSheetDialog.findViewById(R.id.ok_btn);
+        Button cancelButton = bottomSheetDialog.findViewById(R.id.cancel_btn);
+
+        value.setText(note.text);
+
+        okButton.setOnClickListener(view -> {
+            String editedText = value.getText().toString();
+            if (!"".equals(editedText)) {
+                DBActionHandler.handleEditAction(context, note.id, editedText, getActivity().getIntent());
+            }
+            bottomSheetDialog.dismiss();
+        });
+
+        cancelButton.setOnClickListener(view -> bottomSheetDialog.dismiss());
 
         bottomSheetDialog.show();
     }
