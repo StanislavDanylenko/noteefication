@@ -39,7 +39,6 @@ public final class NoteeficationApplicationConstants {
             "\uD83D\uDE1D",
             "\uD83D\uDE1C",
             "\uD83D\uDE1B",
-            "\uD83D\uDE1B",
             "\uD83D\uDE0D",
             "\uD83D\uDE43",
             "☺",
