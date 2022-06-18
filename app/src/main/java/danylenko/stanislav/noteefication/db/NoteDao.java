@@ -22,7 +22,10 @@ public interface NoteDao {
     Note getById(long id);
 
     @Query("SELECT * FROM Note WHERE status = :status ORDER BY creationDate DESC")
-    List<Note> getByStatus(String status);
+    List<Note> getByStatusActive(String status);
+
+    @Query("SELECT * FROM Note WHERE status = :status ORDER BY finishDate DESC")
+    List<Note> getByStatusOld(String status);
 
 
     @Insert

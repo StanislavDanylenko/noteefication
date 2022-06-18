@@ -45,8 +45,8 @@ public final class NotesCache {
         ACTIVE_NOTES.clear();
         HISTORY_NOTES.clear();
 
-        ACTIVE_NOTES.addAll(NOTE_DAO.getByStatus(Status.ACTUAL.getValue()));
-        HISTORY_NOTES.addAll(NOTE_DAO.getByStatus(Status.DONE.getValue()));
+        ACTIVE_NOTES.addAll(NOTE_DAO.getByStatusActive(Status.ACTUAL.getValue()));
+        HISTORY_NOTES.addAll(NOTE_DAO.getByStatusOld(Status.DONE.getValue()));
     }
 
     public void updateBoth() {
@@ -76,13 +76,13 @@ public final class NotesCache {
     }
 
     private void updateActive() {
-        List<Note> byStatus = NOTE_DAO.getByStatus(Status.ACTUAL.getValue());
+        List<Note> byStatus = NOTE_DAO.getByStatusActive(Status.ACTUAL.getValue());
         ACTIVE_NOTES.clear();
         ACTIVE_NOTES.addAll(byStatus);
     }
 
     private void updateHistory() {
-        List<Note> byStatus = NOTE_DAO.getByStatus(Status.DONE.getValue());
+        List<Note> byStatus = NOTE_DAO.getByStatusOld(Status.DONE.getValue());
         HISTORY_NOTES.clear();
         HISTORY_NOTES.addAll(byStatus);
     }

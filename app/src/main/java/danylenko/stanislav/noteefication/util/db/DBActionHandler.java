@@ -18,7 +18,6 @@ import danylenko.stanislav.noteefication.db.Status;
 import danylenko.stanislav.noteefication.util.notification.NotificationUtils;
 
 import static danylenko.stanislav.noteefication.constants.NoteeficationApplicationConstants.COPIED_TO_CLIPBOARD;
-import static danylenko.stanislav.noteefication.constants.NoteeficationApplicationConstants.EMOJI;
 
 public final class DBActionHandler {
 
@@ -93,7 +92,7 @@ public final class DBActionHandler {
     }
 
     public static void handleMoveAllActiveToDoneAction(Context context) {
-        List<Note> actual = noteDao.getByStatus(Status.ACTUAL.getValue());
+        List<Note> actual = noteDao.getByStatusActive(Status.ACTUAL.getValue());
 
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         for (Note note : actual) {
@@ -106,7 +105,7 @@ public final class DBActionHandler {
     }
 
     public static void handleShowAllCurrentAction(Context context) {
-        List<Note> allTheNotes = noteDao.getByStatus(Status.ACTUAL.getValue());
+        List<Note> allTheNotes = noteDao.getByStatusActive(Status.ACTUAL.getValue());
         for (Note note : allTheNotes) {
             NotificationUtils.showNotification(context, note.text, note.smile, new Intent(context, MainActivity.class), note.id);
         }
