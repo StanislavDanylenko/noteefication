@@ -1,7 +1,10 @@
 package danylenko.stanislav.noteefication.activity;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.view.View;
@@ -9,6 +12,7 @@ import android.view.WindowManager;
 import android.widget.EditText;
 
 import danylenko.stanislav.noteefication.R;
+import danylenko.stanislav.noteefication.util.PermissionUtils;
 import danylenko.stanislav.noteefication.util.db.DBActionHandler;
 
 
@@ -24,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
         setFullScreenMode();
 
         editText = findViewById(R.id.editText);
+        requestNotificationPermission();
     }
 
     @Override
@@ -44,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void process(View view) {
         String value = editText.getText().toString();
-        if (value.length() > 0) {
+        if (!value.isEmpty()) {
             DBActionHandler.handleAddAction(this, value, getIntent());
             editText.setText("");
         }
@@ -53,5 +58,21 @@ public class MainActivity extends AppCompatActivity {
     public void goToList(View view) {
         Intent goToListIntent = new Intent(this, NotesTabActivity.class);
         startActivity(goToListIntent);
+    }
+
+    private void requestNotificationPermission() {
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.S_V2) {
+            if (!shouldShowRequestPermissionRationale(PermissionUtils.PERMISSION_REQUEST_CODE_STR)){
+                PermissionUtils.getNotificationPermission(this);
+            }
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(
+            int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        PermissionUtils.processAnswer(this, requestCode, grantResults);
     }
 }
