@@ -20,5 +20,4 @@ public class StartupService extends JobIntentService {
         DBActionHandler.handleShowAllCurrentAction(this);
     }
 
-
 }
