@@ -50,7 +50,8 @@
 
         <service
             android:name=".startup.StartupService"
-            android:permission="android.permission.BIND_JOB_SERVICE" />
+            android:permission="android.permission.BIND_JOB_SERVICE"
+            android:foregroundServiceType="shortService"/>
 
         <receiver
             android:name=".startup.BootReceiver"

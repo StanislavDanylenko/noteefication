@@ -45,16 +45,11 @@ public final class NotificationUtils {
     public static void showNotification(Context context, String body, String smile, Intent intent, int id) {
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
-        String channelId = CHANNEL_ID;
-        String channelName = NOTE_APPLICATION_CHANNEL;
-        int importance = NotificationManager.IMPORTANCE_HIGH;
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel mChannel = new NotificationChannel(
-                    channelId, channelName, importance);
+                    CHANNEL_ID, NOTE_APPLICATION_CHANNEL, NotificationManager.IMPORTANCE_HIGH);
             notificationManager.createNotificationChannel(mChannel);
         }
-
 
         Intent buttonIntent = new Intent(ACTION_DELETE, null, context, DeleteReceiver.class);
         buttonIntent.putExtra(NOTIFICATION_ID, id);
@@ -62,15 +57,13 @@ public final class NotificationUtils {
         PendingIntent btPendingIntent = PendingIntent.getBroadcast(context, id, buttonIntent,
                 PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_MUTABLE);
 
-
         Intent copyIntent = new Intent(ACTION_COPY, null, context, CopyReceiver.class);
         copyIntent.putExtra(VALUE, body);
 
         PendingIntent copyPendingIntent = PendingIntent.getBroadcast(context, id, copyIntent,
                 PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_MUTABLE);
 
-
-        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context, channelId)
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context, CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_pushpinblack1)
                 .setContentTitle(smile)
                 .setOngoing(true)
@@ -86,7 +79,6 @@ public final class NotificationUtils {
                 .setContentText(body);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-
             Intent editIntent = new Intent(ACTION_EDIT, null, context, EditReceiver.class);
             editIntent.setAction(ACTION_EDIT);
             editIntent.putExtra(NOTIFICATION_ID, id);
@@ -113,7 +105,6 @@ public final class NotificationUtils {
             mBuilder.setLargeIcon(BitmapFactory.decodeResource(context.getResources(),
                     R.mipmap.ic_launcher));
         }
-
 
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
         stackBuilder.addNextIntent(intent);
