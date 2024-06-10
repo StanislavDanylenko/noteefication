@@ -2,8 +2,8 @@ package danylenko.stanislav.noteefication.startup;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.annotation.NonNull;
-import android.support.v4.app.JobIntentService;
+import androidx.annotation.NonNull;
+import androidx.core.app.JobIntentService;
 
 import danylenko.stanislav.noteefication.util.db.DBActionHandler;
 
@@ -19,6 +19,5 @@ public class StartupService extends JobIntentService {
     protected void onHandleWork(@NonNull Intent intent) {
         DBActionHandler.handleShowAllCurrentAction(this);
     }
-
 
 }

@@ -1,30 +1,26 @@
 package danylenko.stanislav.noteefication.util.notification;
 
-import android.app.ActivityManager;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
+import android.graphics.Paint;
 import android.os.Build;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.RemoteInput;
-import android.support.v4.app.TaskStackBuilder;
-import android.support.v4.content.ContextCompat;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.RemoteInput;
+import androidx.core.app.TaskStackBuilder;
+import androidx.core.content.ContextCompat;
 
-import java.util.List;
 import java.util.Random;
 
 import danylenko.stanislav.noteefication.R;
-import danylenko.stanislav.noteefication.activity.NotesTabActivity;
 import danylenko.stanislav.noteefication.handler.DeleteReceiver;
 import danylenko.stanislav.noteefication.handler.CopyReceiver;
 import danylenko.stanislav.noteefication.handler.EditReceiver;
+import danylenko.stanislav.noteefication.handler.NotificationDismissedReceiver;
 
-import static android.content.Context.ACTIVITY_SERVICE;
-import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 import static danylenko.stanislav.noteefication.constants.NoteeficationApplicationConstants.ACTION_COPY;
 import static danylenko.stanislav.noteefication.constants.NoteeficationApplicationConstants.ACTION_DELETE;
 import static danylenko.stanislav.noteefication.constants.NoteeficationApplicationConstants.ACTION_EDIT;
@@ -41,38 +37,36 @@ import static danylenko.stanislav.noteefication.constants.NoteeficationApplicati
 
 public final class NotificationUtils {
 
+    private static final Random RANDOM = new Random();
+    private static final Paint paint = new Paint();
+
     private NotificationUtils() {
     }
 
-    public static void showNotification(Context context, String body, Intent intent, int id) {
+    public static void showNotification(Context context, String body, String smile, Intent intent, int id) {
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-
-        String channelId = CHANNEL_ID;
-        String channelName = NOTE_APPLICATION_CHANNEL;
-        int importance = NotificationManager.IMPORTANCE_HIGH;
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel mChannel = new NotificationChannel(
-                    channelId, channelName, importance);
+                    CHANNEL_ID, NOTE_APPLICATION_CHANNEL, NotificationManager.IMPORTANCE_HIGH);
             notificationManager.createNotificationChannel(mChannel);
         }
-
 
         Intent buttonIntent = new Intent(ACTION_DELETE, null, context, DeleteReceiver.class);
         buttonIntent.putExtra(NOTIFICATION_ID, id);
 
-        PendingIntent btPendingIntent = PendingIntent.getBroadcast(context, id, buttonIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-
+        PendingIntent btPendingIntent = PendingIntent.getBroadcast(context, id, buttonIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_MUTABLE);
 
         Intent copyIntent = new Intent(ACTION_COPY, null, context, CopyReceiver.class);
         copyIntent.putExtra(VALUE, body);
 
-        PendingIntent copyPendingIntent = PendingIntent.getBroadcast(context, id, copyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent copyPendingIntent = PendingIntent.getBroadcast(context, id, copyIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_MUTABLE);
 
-
-        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context, channelId)
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context, CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_pushpinblack1)
-                .setContentTitle(randomEmoji())
+                .setContentTitle(smile)
                 .setOngoing(true)
                 .setAutoCancel(false)
                 .setColor(ContextCompat.getColor(context, R.color.colorBlack))
@@ -86,13 +80,13 @@ public final class NotificationUtils {
                 .setContentText(body);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-
             Intent editIntent = new Intent(ACTION_EDIT, null, context, EditReceiver.class);
             editIntent.setAction(ACTION_EDIT);
             editIntent.putExtra(NOTIFICATION_ID, id);
 
             PendingIntent replyPendingIntent =
-                    PendingIntent.getBroadcast(context, id, editIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+                    PendingIntent.getBroadcast(context, id, editIntent,
+                            PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_MUTABLE);
 
 
             RemoteInput remoteInput = new RemoteInput.Builder(EDIT_TEXT)
@@ -107,42 +101,44 @@ public final class NotificationUtils {
 
             mBuilder.addAction(action);
             mBuilder.setLargeIcon(BitmapFactory.decodeResource(context.getResources(),
-                    R.mipmap.pushpinsm));
+                    R.mipmap.pin_512_cropped));
         } else {
             mBuilder.setLargeIcon(BitmapFactory.decodeResource(context.getResources(),
-                    R.mipmap.ic_launcher_pin));
+                    R.mipmap.ic_launcher));
         }
-
 
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
         stackBuilder.addNextIntent(intent);
         PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(
                 0,
-                PendingIntent.FLAG_UPDATE_CURRENT
+                PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_MUTABLE
         );
         mBuilder.setContentIntent(resultPendingIntent);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+            Intent onCancelIntent = new Intent(context, NotificationDismissedReceiver.class);
+            onCancelIntent.putExtra(NOTIFICATION_ID, id);
+
+            PendingIntent deleteIntent = PendingIntent.getBroadcast(
+                    context.getApplicationContext(), id, onCancelIntent, PendingIntent.FLAG_MUTABLE);
+            mBuilder.setDeleteIntent(deleteIntent);
+        }
 
         notificationManager.notify(id, mBuilder.build());
     }
 
-    private static String randomEmoji() {
-        int position = new Random().nextInt(EMOJI.length);
-        return EMOJI[position];
+    public static String randomEmoji() {
+        String emoji;
+        int position;
+        do {
+            position = RANDOM.nextInt(EMOJI.length);
+            emoji = EMOJI[position];
+        } while (!emojiRenderable(emoji));
+        return emoji;
     }
 
-
-    public static void restartTabsActivity(Context context) {
-        ActivityManager manager = (ActivityManager) context.getSystemService(ACTIVITY_SERVICE);
-        List<ActivityManager.RunningTaskInfo> runningTaskInfo = manager.getRunningTasks(1);
-        ComponentName componentInfo = runningTaskInfo.get(0).topActivity;
-        boolean equals = componentInfo.getClassName().equals(NotesTabActivity.class.getName());
-        if(equals) {
-            Intent intent = new Intent(context, NotesTabActivity.class);
-            intent.setFlags(FLAG_ACTIVITY_NEW_TASK);
-            NotesTabActivity.setRestart(true);
-            context.startActivity(intent);
-        }
+    private static boolean emojiRenderable(String emoji) {
+        float width = paint.measureText(emoji);
+        return width > 7;
     }
-
-
 }

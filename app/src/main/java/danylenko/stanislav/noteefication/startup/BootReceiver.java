@@ -10,7 +10,7 @@ import danylenko.stanislav.noteefication.util.db.DBActionHandler;
 public class BootReceiver extends BroadcastReceiver {
 
     @Override
-    public void onReceive(Context context, Intent intent) {
+    public void onReceive(Context context, Intent intent) { // todo: add all actions? and delete SDK version checking
         if (Intent.ACTION_BOOT_COMPLETED.equals(intent.getAction())) {
             if (Build.VERSION.SDK_INT > Build.VERSION_CODES.P) {
                 DBActionHandler.handleShowAllCurrentAction(context);

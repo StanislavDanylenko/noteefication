@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">noteefication</string>
+    <string name="permission_error">Please allow notifications for Taken in the Settings of your device</string>
 </resources>

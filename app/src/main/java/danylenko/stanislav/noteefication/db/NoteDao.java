@@ -1,10 +1,10 @@
 package danylenko.stanislav.noteefication.db;
 
-import android.arch.persistence.room.Dao;
-import android.arch.persistence.room.Delete;
-import android.arch.persistence.room.Insert;
-import android.arch.persistence.room.Query;
-import android.arch.persistence.room.Update;
+import androidx.room.Dao;
+import androidx.room.Delete;
+import androidx.room.Insert;
+import androidx.room.Query;
+import androidx.room.Update;
 
 import java.util.List;
 
@@ -22,7 +22,10 @@ public interface NoteDao {
     Note getById(long id);
 
     @Query("SELECT * FROM Note WHERE status = :status ORDER BY creationDate DESC")
-    List<Note> getByStatus(String status);
+    List<Note> getByStatusActive(String status);
+
+    @Query("SELECT * FROM Note WHERE status = :status ORDER BY finishDate DESC")
+    List<Note> getByStatusOld(String status);
 
 
     @Insert

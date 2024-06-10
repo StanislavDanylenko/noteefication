@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="danylenko.stanislav.noteefication">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
 
     <application
         android:name=".NoteeficationApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher_pin"
+        android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_pin_round"
+        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".activity.NotesTabActivity" android:launchMode="singleInstance"/>
@@ -20,7 +20,8 @@
             android:name=".activity.MainActivity"
             android:windowSoftInputMode="adjustResize"
             android:theme="@style/Theme.Transparent"
-            android:launchMode="singleInstance">
+            android:launchMode="singleInstance"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -28,25 +29,35 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name=".handler.DeleteReceiver">
+        <receiver android:name=".handler.DeleteReceiver"
+            android:exported="true">
             <intent-filter>
                 <action android:name="danylenko.stanislav.noteefication.cancel" />
             </intent-filter>
         </receiver>
-        <receiver android:name=".handler.EditReceiver">
+        <receiver android:name=".handler.EditReceiver"
+            android:exported="true">
             <intent-filter>
                 <action android:name="danylenko.stanislav.noteefication.edit" />
             </intent-filter>
         </receiver>
-        <receiver android:name=".handler.CopyReceiver">
+        <receiver android:name=".handler.CopyReceiver"
+            android:exported="true">
             <intent-filter>
                 <action android:name="danylenko.stanislav.noteefication.copy" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name=".handler.NotificationDismissedReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="danylenko.stanislav.noteefication.cancel" />
             </intent-filter>
         </receiver>
 
         <service
             android:name=".startup.StartupService"
-            android:permission="android.permission.BIND_JOB_SERVICE" />
+            android:permission="android.permission.BIND_JOB_SERVICE"
+            android:foregroundServiceType="shortService"/>
 
         <receiver
             android:name=".startup.BootReceiver"

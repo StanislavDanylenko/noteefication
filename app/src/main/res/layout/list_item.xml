@@ -3,33 +3,65 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:clickable="true"
+    android:focusable="true"
+    android:focusableInTouchMode ="true"
+    android:background="@drawable/item_color"
+    android:layout_height="wrap_content">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:padding="5dp"
         android:orientation="horizontal">
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="50dp"
-            android:id="@+id/value"
-            android:textColor="#000000"
-            android:textSize="14sp"
-            android:gravity="center"
-            android:layout_weight="2"
-            android:singleLine="false"/>
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/date"
-            android:textColor="#141212"
+            android:id="@+id/smile"
             android:textSize="14sp"
             android:gravity="center"
             android:layout_weight="1"
+            android:background="?selectableItemBackgroundBorderless"
             android:singleLine="false"/>
 
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="5"
+            android:orientation="vertical">
+
+            <TextView android:id="@+id/value"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/colorText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <TextView android:id="@+id/date"
+                android:textColor="@color/colorText"
+                android:textSize="12sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/menu"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:textColor="@color/colorText"
+            android:background="@drawable/text_color"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_baseline_more_vert_24" />
+
     </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="1dp"
+        android:textSize="1px"
+        android:background="#404040"/>
 
 </LinearLayout>
