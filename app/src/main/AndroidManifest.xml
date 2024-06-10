@@ -47,6 +47,12 @@
                 <action android:name="danylenko.stanislav.noteefication.copy" />
             </intent-filter>
         </receiver>
+        <receiver android:name=".handler.NotificationDismissedReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="danylenko.stanislav.noteefication.cancel" />
+            </intent-filter>
+        </receiver>
 
         <service
             android:name=".startup.StartupService"

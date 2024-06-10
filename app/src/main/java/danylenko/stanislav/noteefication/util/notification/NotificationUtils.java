@@ -19,6 +19,7 @@ import danylenko.stanislav.noteefication.R;
 import danylenko.stanislav.noteefication.handler.DeleteReceiver;
 import danylenko.stanislav.noteefication.handler.CopyReceiver;
 import danylenko.stanislav.noteefication.handler.EditReceiver;
+import danylenko.stanislav.noteefication.handler.NotificationDismissedReceiver;
 
 import static danylenko.stanislav.noteefication.constants.NoteeficationApplicationConstants.ACTION_COPY;
 import static danylenko.stanislav.noteefication.constants.NoteeficationApplicationConstants.ACTION_DELETE;
@@ -113,6 +114,15 @@ public final class NotificationUtils {
                 PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_MUTABLE
         );
         mBuilder.setContentIntent(resultPendingIntent);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+            Intent onCancelIntent = new Intent(context, NotificationDismissedReceiver.class);
+            onCancelIntent.putExtra(NOTIFICATION_ID, id);
+
+            PendingIntent deleteIntent = PendingIntent.getBroadcast(
+                    context.getApplicationContext(), id, onCancelIntent, PendingIntent.FLAG_MUTABLE);
+            mBuilder.setDeleteIntent(deleteIntent);
+        }
 
         notificationManager.notify(id, mBuilder.build());
     }

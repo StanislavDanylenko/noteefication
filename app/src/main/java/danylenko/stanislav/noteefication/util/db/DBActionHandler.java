@@ -111,6 +111,11 @@ public final class DBActionHandler {
         }
     }
 
+    public static void handleShowAction(Context context, int noteId) {
+        Note note = noteDao.getById(noteId);
+        handleShowAction(context, note);
+    }
+
     public static void handleShowAction(Context context, Note note) {
         NotificationUtils.showNotification(context, note.text, note.smile, new Intent(context, MainActivity.class), note.id);
     }
