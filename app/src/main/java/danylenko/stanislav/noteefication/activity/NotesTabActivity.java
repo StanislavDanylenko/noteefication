@@ -3,9 +3,15 @@ package danylenko.stanislav.noteefication.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import com.google.android.material.tabs.TabLayout;
+
+import androidx.activity.EdgeToEdge;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
+import android.view.WindowManager;
 
 import danylenko.stanislav.noteefication.R;
 import danylenko.stanislav.noteefication.fragment.FragmentsPagerAdapter;
@@ -19,9 +25,8 @@ public class NotesTabActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_notes_tab);
-
-        getSupportActionBar().hide();
 
         ViewPager viewPager = findViewById(R.id.viewpager);
         FragmentsPagerAdapter adapter = new FragmentsPagerAdapter(getSupportFragmentManager());
@@ -35,6 +40,14 @@ public class NotesTabActivity extends AppCompatActivity {
 
         viewPager.setCurrentItem(tabIndex);
 
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            Insets imeInsets = insets.getInsets(WindowInsetsCompat.Type.ime());
+            int bottom = Math.max(systemBars.bottom, imeInsets.bottom);
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, bottom);
+            return insets;
+        });
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
     }
 
     public void cleanHistory(View view) {

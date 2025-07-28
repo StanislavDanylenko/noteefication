@@ -100,7 +100,7 @@ public class ActiveNotesPageFragment extends Fragment implements AppReceiver {
     }
 
     private void showEditDialog(Note note) {
-        final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(context, R.style.DialogStyle);;
+        final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(context);
         bottomSheetDialog.setContentView(R.layout.dialog_edit_bottom);
 
         EditText value = bottomSheetDialog.findViewById(R.id.value);

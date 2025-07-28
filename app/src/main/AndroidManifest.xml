@@ -15,7 +15,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.NotesTabActivity" android:launchMode="singleInstance"/>
+        <activity
+            android:name=".activity.NotesTabActivity"
+            android:windowSoftInputMode="adjustResize"
+            android:launchMode="singleInstance"/>
         <activity
             android:name=".activity.MainActivity"
             android:windowSoftInputMode="adjustResize"
