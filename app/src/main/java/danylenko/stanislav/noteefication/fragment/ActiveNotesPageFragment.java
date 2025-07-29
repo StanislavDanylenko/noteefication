@@ -17,6 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.android.material.button.MaterialButton;
 
 import danylenko.stanislav.noteefication.R;
 import danylenko.stanislav.noteefication.customreceiver.AppReceiver;
@@ -66,6 +67,9 @@ public class ActiveNotesPageFragment extends Fragment implements AppReceiver {
         listView.setLayoutManager(new LinearLayoutManager(context));
 
         register();
+
+        MaterialButton clearButton = view.findViewById(R.id.clear_active_btn);
+        clearButton.setOnClickListener(v -> cleanAllCurrent());
 
         return view;
     }
@@ -136,6 +140,10 @@ public class ActiveNotesPageFragment extends Fragment implements AppReceiver {
         }
 
         bottomSheetDialog.show();
+    }
+
+    private void cleanAllCurrent() {
+        DBActionHandler.handleMoveAllActiveToDoneAction(context);
     }
 
     @Override

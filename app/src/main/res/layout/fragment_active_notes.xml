@@ -12,10 +12,9 @@
         android:choiceMode="singleChoice"/>
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/button3"
+        android:id="@+id/clear_active_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="cleanAllCurrent"
         android:text="@string/clean"
         android:textSize="18sp"
         android:layout_marginTop="8dp"

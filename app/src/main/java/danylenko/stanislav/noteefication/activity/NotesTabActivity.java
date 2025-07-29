@@ -57,12 +57,4 @@ public class NotesTabActivity extends AppCompatActivity {
         });
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
     }
-
-    public void cleanHistory(View view) {
-        DBActionHandler.handleCleanHistoryAction();
-    }
-
-    public void cleanAllCurrent(View view) {
-        DBActionHandler.handleMoveAllActiveToDoneAction(this);
-    }
 }
