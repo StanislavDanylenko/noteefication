@@ -40,8 +40,7 @@ public final class NotificationUtils {
     private static final Random RANDOM = new Random();
     private static final Paint paint = new Paint();
 
-    private NotificationUtils() {
-    }
+    private NotificationUtils() {}
 
     public static void showNotification(Context context, String body, String smile, Intent intent, int id) {
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);

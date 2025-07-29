@@ -1,5 +1,6 @@
 package danylenko.stanislav.noteefication.tab;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -49,10 +50,10 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
     }
 
     protected class NoteViewHolder extends RecyclerView.ViewHolder {
-        private TextView value;
-        private TextView date;
-        private TextView smile;
-        private ImageButton menuButton;
+        private final TextView value;
+        private final TextView date;
+        private final TextView smile;
+        private final ImageButton menuButton;
 
         public NoteViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -63,6 +64,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
             menuButton = itemView.findViewById(R.id.menu);
         }
 
+        @SuppressLint("SetTextI18n")
         public void bind(final Note note, final OnItemClickListener listener) {
             smile.setText(note.smile);
             value.setText(note.text);

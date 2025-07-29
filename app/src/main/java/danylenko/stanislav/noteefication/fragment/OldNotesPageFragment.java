@@ -66,23 +66,28 @@ public class OldNotesPageFragment extends Fragment implements AppReceiver {
         bottomSheetDialog.setContentView(R.layout.old_notes_bottom_menu);
 
         LinearLayout copy = bottomSheetDialog.findViewById(R.id.on_dialog_copy);
+        if (copy != null) {
+            copy.setOnClickListener(view -> {
+                DBActionHandler.handleCopyAction(context, note.text);
+                bottomSheetDialog.dismiss();
+            });
+        }
+
         LinearLayout restore = bottomSheetDialog.findViewById(R.id.on_dialog_restore);
+        if (restore != null) {
+            restore.setOnClickListener(view -> {
+                DBActionHandler.handleRestoreAction(context, note);
+                bottomSheetDialog.dismiss();
+            });
+        }
+
         LinearLayout delete = bottomSheetDialog.findViewById(R.id.on_dialog_delete);
-
-        copy.setOnClickListener(view -> {
-            DBActionHandler.handleCopyAction(context, note.text);
-            bottomSheetDialog.dismiss();
-        });
-
-        restore.setOnClickListener(view -> {
-            DBActionHandler.handleRestoreAction(context, note);
-            bottomSheetDialog.dismiss();
-        });
-
-        delete.setOnClickListener(view -> {
-            DBActionHandler.handleDeleteAction(note);
-            bottomSheetDialog.dismiss();
-        });
+        if (delete != null) {
+            delete.setOnClickListener(view -> {
+                DBActionHandler.handleDeleteAction(note);
+                bottomSheetDialog.dismiss();
+            });
+        }
 
         bottomSheetDialog.show();
     }

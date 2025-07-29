@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -26,7 +27,6 @@ import danylenko.stanislav.noteefication.tab.OnItemClickListener;
 import danylenko.stanislav.noteefication.util.db.DBActionHandler;
 import danylenko.stanislav.noteefication.util.db.NotesCache;
 import danylenko.stanislav.noteefication.util.notification.NotificationUtils;
-
 
 public class ActiveNotesPageFragment extends Fragment implements AppReceiver {
 
@@ -53,9 +53,12 @@ public class ActiveNotesPageFragment extends Fragment implements AppReceiver {
 
                     @Override
                     public void onEmojiClick(Note item, TextView emojiView) {
-                        String emoji = NotificationUtils.randomEmoji();
-                        DBActionHandler.handleSmileAction(context, item.id, emoji, getActivity().getIntent());
-                        emojiView.setText(emoji);
+                        FragmentActivity activity = getActivity();
+                        if (activity != null && activity.getIntent() != null) {
+                            String emoji = NotificationUtils.randomEmoji();
+                            DBActionHandler.handleSmileAction(context, item.id, emoji, activity.getIntent());
+                            emojiView.setText(emoji);
+                        }
                     }
                 });
         listView.setAdapter(noteAdapter);
@@ -72,29 +75,36 @@ public class ActiveNotesPageFragment extends Fragment implements AppReceiver {
         bottomSheetDialog.setContentView(R.layout.active_notes_bottom_menu);
 
         LinearLayout show = bottomSheetDialog.findViewById(R.id.an_dialog_show);
+        if (show != null) {
+            show.setOnClickListener(view -> {
+                DBActionHandler.handleShowAction(context, note);
+                bottomSheetDialog.dismiss();
+            });
+        }
+
         LinearLayout copy = bottomSheetDialog.findViewById(R.id.an_dialog_copy);
+        if (copy != null) {
+            copy.setOnClickListener(view -> {
+                DBActionHandler.handleCopyAction(context, note.text);
+                bottomSheetDialog.dismiss();
+            });
+        }
+
         LinearLayout edit = bottomSheetDialog.findViewById(R.id.an_dialog_edit);
+        if (edit != null) {
+            edit.setOnClickListener(view -> {
+                showEditDialog(note);
+                bottomSheetDialog.dismiss();
+            });
+        }
+
         LinearLayout remove = bottomSheetDialog.findViewById(R.id.an_dialog_remove);
-
-        show.setOnClickListener(view -> {
-            DBActionHandler.handleShowAction(context, note);
-            bottomSheetDialog.dismiss();
-        });
-
-        copy.setOnClickListener(view -> {
-            DBActionHandler.handleCopyAction(context, note.text);
-            bottomSheetDialog.dismiss();
-        });
-
-        edit.setOnClickListener(view -> {
-            showEditDialog(note);
-            bottomSheetDialog.dismiss();
-        });
-
-        remove.setOnClickListener(view -> {
-            DBActionHandler.handleRemoveAction(context, note.id);
-            bottomSheetDialog.dismiss();
-        });
+        if (remove != null) {
+            remove.setOnClickListener(view -> {
+                DBActionHandler.handleRemoveAction(context, note.id);
+                bottomSheetDialog.dismiss();
+            });
+        }
 
         bottomSheetDialog.show();
     }
@@ -104,20 +114,26 @@ public class ActiveNotesPageFragment extends Fragment implements AppReceiver {
         bottomSheetDialog.setContentView(R.layout.dialog_edit_bottom);
 
         EditText value = bottomSheetDialog.findViewById(R.id.value);
+        if (value != null) {
+            value.setText(note.text);
+        }
+
         Button okButton = bottomSheetDialog.findViewById(R.id.ok_btn);
+        FragmentActivity activity = getActivity();
+        if (okButton != null && value != null && activity != null && activity.getIntent() != null) {
+            okButton.setOnClickListener(view -> {
+                String editedText = value.getText().toString();
+                if (!editedText.isEmpty()) {
+                    DBActionHandler.handleEditAction(context, note.id, editedText, activity.getIntent());
+                }
+                bottomSheetDialog.dismiss();
+            });
+        }
+
         Button cancelButton = bottomSheetDialog.findViewById(R.id.cancel_btn);
-
-        value.setText(note.text);
-
-        okButton.setOnClickListener(view -> {
-            String editedText = value.getText().toString();
-            if (!"".equals(editedText)) {
-                DBActionHandler.handleEditAction(context, note.id, editedText, getActivity().getIntent());
-            }
-            bottomSheetDialog.dismiss();
-        });
-
-        cancelButton.setOnClickListener(view -> bottomSheetDialog.dismiss());
+        if (cancelButton != null) {
+            cancelButton.setOnClickListener(view -> bottomSheetDialog.dismiss());
+        }
 
         bottomSheetDialog.show();
     }

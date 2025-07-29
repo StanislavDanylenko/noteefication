@@ -2,30 +2,28 @@ package danylenko.stanislav.noteefication.fragment;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.fragment.app.FragmentActivity;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import danylenko.stanislav.noteefication.util.db.NotesCache;
 
-public class FragmentsPagerAdapter extends FragmentPagerAdapter {
+public class FragmentsPagerAdapter extends FragmentStateAdapter {
 
     private static final String[] TAB_TITLES = new String[]{"ACTIVE", "OLD"};
-    private static final int PAGE_COUNT = 2;
 
-
-    public FragmentsPagerAdapter(FragmentManager fragmentManager) {
-        super(fragmentManager);
+    public FragmentsPagerAdapter(@NonNull FragmentActivity fragmentActivity) {
+        super(fragmentActivity);
         NotesCache.getInstance().invalidateCaches();
     }
 
     @Override
-    public int getCount() {
-        return PAGE_COUNT;
+    public int getItemCount() {
+        return TAB_TITLES.length;
     }
 
     @NonNull
     @Override
-    public Fragment getItem(int position) {
+    public Fragment createFragment(int position) {
         if (position == 0) {
             return new ActiveNotesPageFragment();
         } else {
@@ -33,8 +31,7 @@ public class FragmentsPagerAdapter extends FragmentPagerAdapter {
         }
     }
 
-    @Override
-    public CharSequence getPageTitle(int position) {
+    public String getPageTitle(int position) {
         return TAB_TITLES[position];
     }
 }

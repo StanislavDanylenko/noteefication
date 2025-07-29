@@ -1,9 +1,7 @@
 package danylenko.stanislav.noteefication.constants;
 
 public final class NoteeficationApplicationConstants {
-
-    private NoteeficationApplicationConstants() {
-    }
+    private NoteeficationApplicationConstants() {    }
 
     public static final String NOTIFICATION_ID = "notificationId";
     public static final String ACTION_EDIT = "danylenko.stanislav.noteefication.edit";
