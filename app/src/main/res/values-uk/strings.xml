@@ -16,4 +16,6 @@
     <string name="more_options">більше опцій</string>
     <string name="restore">Відновити</string>
     <string name="delete">Видалити</string>
+    <string name="active">АКТИВНІ</string>
+    <string name="old">АРХІВ</string>
 </resources>

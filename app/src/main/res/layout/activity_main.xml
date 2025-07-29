@@ -93,7 +93,7 @@
                 android:text=""
                 app:cornerRadius="5dp"
                 android:backgroundTint="@color/colorBlack"
-                android:contentDescription="@string/add_note" />
+                android:contentDescription="@string/add_note_button" />
         </LinearLayout>
 
     </LinearLayout>

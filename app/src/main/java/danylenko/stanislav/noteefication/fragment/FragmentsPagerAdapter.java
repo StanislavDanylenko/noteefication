@@ -1,10 +1,13 @@
 package danylenko.stanislav.noteefication.fragment;
 
+import static androidx.core.content.ContextCompat.getString;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
+import danylenko.stanislav.noteefication.R;
 import danylenko.stanislav.noteefication.util.db.NotesCache;
 
 public class FragmentsPagerAdapter extends FragmentStateAdapter {
@@ -13,6 +16,8 @@ public class FragmentsPagerAdapter extends FragmentStateAdapter {
 
     public FragmentsPagerAdapter(@NonNull FragmentActivity fragmentActivity) {
         super(fragmentActivity);
+        TAB_TITLES[0] = fragmentActivity.getApplicationContext().getString(R.string.active);
+        TAB_TITLES[1] = fragmentActivity.getApplicationContext().getString(R.string.old);
         NotesCache.getInstance().invalidateCaches();
     }
 
