@@ -18,4 +18,6 @@
     <string name="delete">Delete</string>
     <string name="active">ACTIVE</string>
     <string name="old">OLD</string>
+    <string name="sometime">sometime</string>
+    <string name="now">now</string>
 </resources>

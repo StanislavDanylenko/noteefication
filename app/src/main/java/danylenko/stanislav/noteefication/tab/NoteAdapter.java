@@ -23,11 +23,15 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
     private final List<Note> noteList;
     private final OnItemClickListener listener;
     private final DateFormat dateFormat;
+    private final String sometime;
+    private final String now;
 
     public NoteAdapter(List<Note> noteList, Context context, OnItemClickListener listener) {
         this.noteList = noteList;
         this.listener = listener;
         this.dateFormat = android.text.format.DateFormat.getDateFormat(context);
+        this.sometime = context.getString(R.string.sometime);
+        this.now = context.getString(R.string.now);
     }
 
     @NonNull
@@ -69,8 +73,8 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
             smile.setText(note.smile);
             value.setText(note.text);
 
-            String creationDateString = getDateString(note.creationDate, "sometime");
-            String finishDateString = getDateString(note.finishDate, "now");
+            String creationDateString = getDateString(note.creationDate, sometime);
+            String finishDateString = getDateString(note.finishDate, now);
 
             date.setText(creationDateString + " - " + finishDateString);
 

@@ -18,4 +18,6 @@
     <string name="delete">Видалити</string>
     <string name="active">АКТИВНІ</string>
     <string name="old">АРХІВ</string>
+    <string name="sometime">колись</string>
+    <string name="now">зараз</string>
 </resources>
