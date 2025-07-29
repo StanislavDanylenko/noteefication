@@ -33,25 +33,25 @@
         </activity>
 
         <receiver android:name=".handler.DeleteReceiver"
-            android:exported="true">
+            android:exported="false">
             <intent-filter>
                 <action android:name="danylenko.stanislav.noteefication.cancel" />
             </intent-filter>
         </receiver>
         <receiver android:name=".handler.EditReceiver"
-            android:exported="true">
+            android:exported="false">
             <intent-filter>
                 <action android:name="danylenko.stanislav.noteefication.edit" />
             </intent-filter>
         </receiver>
         <receiver android:name=".handler.CopyReceiver"
-            android:exported="true">
+            android:exported="false">
             <intent-filter>
                 <action android:name="danylenko.stanislav.noteefication.copy" />
             </intent-filter>
         </receiver>
         <receiver android:name=".handler.NotificationDismissedReceiver"
-            android:exported="true">
+            android:exported="false">
             <intent-filter>
                 <action android:name="danylenko.stanislav.noteefication.cancel" />
             </intent-filter>
