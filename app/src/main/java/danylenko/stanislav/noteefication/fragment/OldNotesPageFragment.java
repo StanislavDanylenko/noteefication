@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.android.material.button.MaterialButton;
 
 import danylenko.stanislav.noteefication.customreceiver.AppReceiver;
 import danylenko.stanislav.noteefication.db.Status;
@@ -58,6 +59,9 @@ public class OldNotesPageFragment extends Fragment implements AppReceiver {
 
         listView.setLayoutManager(new LinearLayoutManager(context));
 
+        MaterialButton clearButton = view.findViewById(R.id.clear_old_btn);
+        clearButton.setOnClickListener(v -> cleanHistory());
+
         return view;
     }
 
@@ -66,25 +70,34 @@ public class OldNotesPageFragment extends Fragment implements AppReceiver {
         bottomSheetDialog.setContentView(R.layout.old_notes_bottom_menu);
 
         LinearLayout copy = bottomSheetDialog.findViewById(R.id.on_dialog_copy);
+        if (copy != null) {
+            copy.setOnClickListener(view -> {
+                DBActionHandler.handleCopyAction(context, note.text);
+                bottomSheetDialog.dismiss();
+            });
+        }
+
         LinearLayout restore = bottomSheetDialog.findViewById(R.id.on_dialog_restore);
+        if (restore != null) {
+            restore.setOnClickListener(view -> {
+                DBActionHandler.handleRestoreAction(context, note);
+                bottomSheetDialog.dismiss();
+            });
+        }
+
         LinearLayout delete = bottomSheetDialog.findViewById(R.id.on_dialog_delete);
-
-        copy.setOnClickListener(view -> {
-            DBActionHandler.handleCopyAction(context, note.text);
-            bottomSheetDialog.dismiss();
-        });
-
-        restore.setOnClickListener(view -> {
-            DBActionHandler.handleRestoreAction(context, note);
-            bottomSheetDialog.dismiss();
-        });
-
-        delete.setOnClickListener(view -> {
-            DBActionHandler.handleDeleteAction(note);
-            bottomSheetDialog.dismiss();
-        });
+        if (delete != null) {
+            delete.setOnClickListener(view -> {
+                DBActionHandler.handleDeleteAction(note);
+                bottomSheetDialog.dismiss();
+            });
+        }
 
         bottomSheetDialog.show();
+    }
+
+    private void cleanHistory() {
+        DBActionHandler.handleCleanHistoryAction();
     }
 
     @Override

@@ -1,4 +1,23 @@
 <resources>
-    <string name="app_name">noteefication</string>
+    <string name="app_name" translatable="false">noteefication</string>
     <string name="permission_error">Please allow notifications for noteefication in the Settings of your device</string>
+    <string name="enter_note">Type your note here…</string>
+    <string name="add_note_button">Add note button</string>
+    <string name="history_button">History button</string>
+    <string name="ok" translatable="false">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="editing">Editing</string>
+    <string name="show">Show</string>
+    <string name="copy">Copy</string>
+    <string name="edit">Edit</string>
+    <string name="remove">Remove</string>
+    <string name="clean">CLEAN</string>
+    <string name="icon">icon</string>
+    <string name="more_options">more options</string>
+    <string name="restore">Restore</string>
+    <string name="delete">Delete</string>
+    <string name="active">ACTIVE</string>
+    <string name="old">OLD</string>
+    <string name="sometime">sometime</string>
+    <string name="now">now</string>
 </resources>

@@ -21,8 +21,8 @@ import static danylenko.stanislav.noteefication.constants.NoteeficationApplicati
 
 public final class DBActionHandler {
 
-    private static NoteDao noteDao = NoteeficationApplication.getInstance().getDatabase().noteDao();
-    private static NotesCache notesCache = NotesCache.getInstance();
+    private static final NoteDao noteDao = NoteeficationApplication.getInstance().getDatabase().noteDao();
+    private static final NotesCache notesCache = NotesCache.getInstance();
 
     private DBActionHandler() {}
 

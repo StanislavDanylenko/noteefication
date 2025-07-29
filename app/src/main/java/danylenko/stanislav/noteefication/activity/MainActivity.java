@@ -4,12 +4,18 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 
+import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
+
+import com.google.android.material.button.MaterialButton;
 
 import danylenko.stanislav.noteefication.R;
 import danylenko.stanislav.noteefication.util.PermissionUtils;
@@ -23,12 +29,27 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 
         setFullScreenMode();
 
         editText = findViewById(R.id.editText);
         requestNotificationPermission();
+
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            Insets imeInsets = insets.getInsets(WindowInsetsCompat.Type.ime());
+            int bottom = Math.max(systemBars.bottom, imeInsets.bottom);
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, bottom);
+            return insets;
+        });
+
+        MaterialButton addButton = findViewById(R.id.add_button);
+        addButton.setOnClickListener(v -> addNote());
+
+        MaterialButton historyButton = findViewById(R.id.history_button);
+        historyButton.setOnClickListener(v -> goToList());
     }
 
     @Override
@@ -47,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void process(View view) {
+    private void addNote() {
         String value = editText.getText().toString();
         if (!value.isEmpty()) {
             DBActionHandler.handleAddAction(this, value, getIntent());
@@ -55,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void goToList(View view) {
+    private void goToList() {
         Intent goToListIntent = new Intent(this, NotesTabActivity.class);
         startActivity(goToListIntent);
     }

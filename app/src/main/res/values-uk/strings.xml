@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="permission_error">Будь ласка, дозвольте показ сповіщень для noteefication в налаштуваннях вашого пристрою</string>
+    <string name="enter_note">Пишіть нотатку…</string>
+    <string name="add_note_button">Кнопка додавання нотатки</string>
+    <string name="history_button">Кнопка перегляду нотатки</string>
+    <string name="ok" translatable="false">OK</string>
+    <string name="cancel">Відміна</string>
+    <string name="editing">Редагування</string>
+    <string name="show">Показати</string>
+    <string name="copy">Копіювати</string>
+    <string name="edit">Редагувати</string>
+    <string name="remove">Видалити</string>
+    <string name="clean">ВИДАЛИТИ ВСЕ</string>
+    <string name="icon">емоджі</string>
+    <string name="more_options">більше опцій</string>
+    <string name="restore">Відновити</string>
+    <string name="delete">Видалити</string>
+    <string name="active">АКТИВНІ</string>
+    <string name="old">АРХІВ</string>
+    <string name="sometime">колись</string>
+    <string name="now">зараз</string>
+</resources>

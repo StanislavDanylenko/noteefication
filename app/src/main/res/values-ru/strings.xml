@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="permission_error">Пожалуйста, разрешите показ уведомлений для noteefication в настройках вашего устройства</string>
+    <string name="enter_note">Пишите заметку…</string>
+    <string name="add_note_button">Кнопка добавления заметки</string>
+    <string name="history_button">Кнопка просмотра заметок</string>
+    <string name="ok" translatable="false">OK</string>
+    <string name="cancel">Отмена</string>
+    <string name="editing">Редактирование</string>
+    <string name="show">Показать</string>
+    <string name="copy">Копировать</string>
+    <string name="edit">Редактировать</string>
+    <string name="remove">Удалить</string>
+    <string name="clean">УДАЛИТЬ ВСЕ</string>
+    <string name="icon">эмоджи</string>
+    <string name="more_options">больше опций</string>
+    <string name="restore">Восстановить</string>
+    <string name="delete">Удалить</string>
+    <string name="active">АКТИВНЫЕ</string>
+    <string name="old">АРХИВ</string>
+    <string name="sometime">когда-то</string>
+    <string name="now">сейчас</string>
+</resources>

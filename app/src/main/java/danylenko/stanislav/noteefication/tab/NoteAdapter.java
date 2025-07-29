@@ -1,5 +1,6 @@
 package danylenko.stanislav.noteefication.tab;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,11 +23,15 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
     private final List<Note> noteList;
     private final OnItemClickListener listener;
     private final DateFormat dateFormat;
+    private final String sometime;
+    private final String now;
 
     public NoteAdapter(List<Note> noteList, Context context, OnItemClickListener listener) {
         this.noteList = noteList;
         this.listener = listener;
         this.dateFormat = android.text.format.DateFormat.getDateFormat(context);
+        this.sometime = context.getString(R.string.sometime);
+        this.now = context.getString(R.string.now);
     }
 
     @NonNull
@@ -49,10 +54,10 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
     }
 
     protected class NoteViewHolder extends RecyclerView.ViewHolder {
-        private TextView value;
-        private TextView date;
-        private TextView smile;
-        private ImageButton menuButton;
+        private final TextView value;
+        private final TextView date;
+        private final TextView smile;
+        private final ImageButton menuButton;
 
         public NoteViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -63,12 +68,13 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
             menuButton = itemView.findViewById(R.id.menu);
         }
 
+        @SuppressLint("SetTextI18n")
         public void bind(final Note note, final OnItemClickListener listener) {
             smile.setText(note.smile);
             value.setText(note.text);
 
-            String creationDateString = getDateString(note.creationDate, "sometime");
-            String finishDateString = getDateString(note.finishDate, "now");
+            String creationDateString = getDateString(note.creationDate, sometime);
+            String finishDateString = getDateString(note.finishDate, now);
 
             date.setText(creationDateString + " - " + finishDateString);
 

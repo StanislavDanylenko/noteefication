@@ -4,7 +4,14 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorAppBar">
+    android:paddingTop="16dp">
+
+    <View
+        android:layout_width="40dp"
+        android:layout_height="4dp"
+        android:layout_gravity="center"
+        android:background="@drawable/drag_handle"
+        android:layout_marginBottom="12dp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -17,14 +24,14 @@
         <ImageView
             android:layout_width="24dp"
             android:layout_height="24dp"
+            android:contentDescription="@string/show"
             android:src="@drawable/ic_baseline_notifications_24"
             android:layout_margin="8dp"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Show"
-            android:textColor="@color/colorText"
+            android:text="@string/show"
             android:layout_gravity="center_vertical"
             android:padding="8dp"/>
     </LinearLayout>
@@ -40,14 +47,14 @@
         <ImageView
             android:layout_width="24dp"
             android:layout_height="24dp"
+            android:contentDescription="@string/copy"
             android:src="@drawable/ic_baseline_content_copy_24"
             android:layout_margin="8dp"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Copy"
-            android:textColor="@color/colorText"
+            android:text="@string/copy"
             android:layout_gravity="center_vertical"
             android:padding="8dp"/>
 
@@ -64,14 +71,14 @@
         <ImageView
             android:layout_width="24dp"
             android:layout_height="24dp"
+            android:contentDescription="@string/edit"
             android:src="@drawable/ic_baseline_edit_24"
             android:layout_margin="8dp"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Edit"
-            android:textColor="@color/colorText"
+            android:text="@string/edit"
             android:layout_gravity="center_vertical"
             android:padding="8dp"/>
 
@@ -88,14 +95,14 @@
         <ImageView
             android:layout_width="24dp"
             android:layout_height="24dp"
+            android:contentDescription="@string/remove"
             android:src="@drawable/ic_baseline_delete_24"
             android:layout_margin="8dp"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Remove"
-            android:textColor="@color/colorText"
+            android:text="@string/remove"
             android:layout_gravity="center_vertical"
             android:padding="8dp"/>
     </LinearLayout>

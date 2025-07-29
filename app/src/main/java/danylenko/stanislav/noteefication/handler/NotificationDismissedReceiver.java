@@ -11,6 +11,7 @@ import android.os.Bundle;
 import danylenko.stanislav.noteefication.util.db.DBActionHandler;
 
 public class NotificationDismissedReceiver extends BroadcastReceiver {
+
     @Override
     public void onReceive(Context context, Intent intent) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
