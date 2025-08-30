@@ -36,16 +36,17 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/enter_note"
-            android:textColor="@color/colorWhite">
+            app:boxBackgroundColor="@android:color/white"
+            app:boxBackgroundMode="filled">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textMultiLine"
-                android:minHeight="48dp"
+                android:minHeight="58dp"
                 android:gravity="start|top"
-                android:textColor="@color/colorWhite"/>
+                android:textColor="@android:color/black"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <LinearLayout
