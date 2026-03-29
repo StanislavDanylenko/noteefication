@@ -30,7 +30,6 @@ import danylenko.stanislav.noteefication.util.db.NotesCache;
 import danylenko.stanislav.noteefication.util.notification.NotificationUtils;
 
 public class ActiveNotesPageFragment extends Fragment implements AppReceiver {
-
     private NoteAdapter noteAdapter;
     private Context context;
 

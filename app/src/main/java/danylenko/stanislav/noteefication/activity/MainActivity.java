@@ -21,9 +21,7 @@ import danylenko.stanislav.noteefication.R;
 import danylenko.stanislav.noteefication.util.PermissionUtils;
 import danylenko.stanislav.noteefication.util.db.DBActionHandler;
 
-
 public class MainActivity extends AppCompatActivity {
-
     private EditText editText;
 
     @Override

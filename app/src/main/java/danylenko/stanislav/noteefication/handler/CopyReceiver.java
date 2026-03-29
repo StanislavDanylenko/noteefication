@@ -7,7 +7,6 @@ import android.content.Intent;
 import danylenko.stanislav.noteefication.util.db.DBActionHandler;
 import danylenko.stanislav.noteefication.constants.NoteeficationApplicationConstants;
 
-
 public class CopyReceiver extends BroadcastReceiver {
 
     @Override
@@ -15,5 +14,4 @@ public class CopyReceiver extends BroadcastReceiver {
         String value = intent.getStringExtra(NoteeficationApplicationConstants.VALUE);
         DBActionHandler.handleCopyAction(context, value);
     }
-
 }

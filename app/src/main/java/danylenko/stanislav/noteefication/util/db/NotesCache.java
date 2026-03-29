@@ -12,7 +12,6 @@ import danylenko.stanislav.noteefication.db.NoteDao;
 import danylenko.stanislav.noteefication.db.Status;
 
 public final class NotesCache {
-
     private static volatile NotesCache instance;
 
     private final NoteDao NOTE_DAO;

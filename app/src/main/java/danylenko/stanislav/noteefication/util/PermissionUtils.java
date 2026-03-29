@@ -13,7 +13,6 @@ import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 
 public class PermissionUtils {
-
     public static final int PERMISSION_REQUEST_CODE = 112;
     public static final String PERMISSION_REQUEST_CODE_STR = "112";
 
@@ -40,5 +39,4 @@ public class PermissionUtils {
             }
         }
     }
-
 }

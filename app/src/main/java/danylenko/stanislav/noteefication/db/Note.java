@@ -35,5 +35,4 @@ public class Note implements Serializable {
     @ColumnInfo(name = "finishDate")
     @TypeConverters({DateConverter.class})
     public Date finishDate;
-
 }

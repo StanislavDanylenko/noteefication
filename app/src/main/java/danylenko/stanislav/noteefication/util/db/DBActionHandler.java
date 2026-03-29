@@ -20,12 +20,10 @@ import danylenko.stanislav.noteefication.util.notification.NotificationUtils;
 import static danylenko.stanislav.noteefication.constants.NoteeficationApplicationConstants.COPIED_TO_CLIPBOARD;
 
 public final class DBActionHandler {
-
     private static final NoteDao noteDao = NoteeficationApplication.getInstance().getDatabase().noteDao();
     private static final NotesCache notesCache = NotesCache.getInstance();
 
     private DBActionHandler() {}
-
 
     public static void handleEditAction(Context context, int notificationId, String editedText, Intent intent) {
         Note note = noteDao.getById(notificationId);

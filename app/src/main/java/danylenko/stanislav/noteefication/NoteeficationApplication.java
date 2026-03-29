@@ -9,7 +9,6 @@ import androidx.room.Room;
 import danylenko.stanislav.noteefication.db.AppDatabase;
 
 public class NoteeficationApplication extends Application {
-
     private static NoteeficationApplication instance;
 
     private AppDatabase database;
@@ -33,5 +32,4 @@ public class NoteeficationApplication extends Application {
     public AppDatabase getDatabase() {
         return database;
     }
-
 }

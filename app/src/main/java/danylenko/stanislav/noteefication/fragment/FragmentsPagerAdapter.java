@@ -1,7 +1,5 @@
 package danylenko.stanislav.noteefication.fragment;
 
-import static androidx.core.content.ContextCompat.getString;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
@@ -11,7 +9,6 @@ import danylenko.stanislav.noteefication.R;
 import danylenko.stanislav.noteefication.util.db.NotesCache;
 
 public class FragmentsPagerAdapter extends FragmentStateAdapter {
-
     private static final String[] TAB_TITLES = new String[]{"ACTIVE", "OLD"};
 
     public FragmentsPagerAdapter(@NonNull FragmentActivity fragmentActivity) {

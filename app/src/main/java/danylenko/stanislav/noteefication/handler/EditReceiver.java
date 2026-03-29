@@ -12,7 +12,6 @@ import static danylenko.stanislav.noteefication.constants.NoteeficationApplicati
 import static danylenko.stanislav.noteefication.constants.NoteeficationApplicationConstants.EDIT_TEXT;
 import static danylenko.stanislav.noteefication.constants.NoteeficationApplicationConstants.NOTIFICATION_ID;
 
-
 public class EditReceiver extends BroadcastReceiver {
 
     @Override

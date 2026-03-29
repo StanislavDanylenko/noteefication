@@ -25,9 +25,7 @@ import danylenko.stanislav.noteefication.db.Note;
 import danylenko.stanislav.noteefication.tab.NoteAdapter;
 import danylenko.stanislav.noteefication.util.db.NotesCache;
 
-
 public class OldNotesPageFragment extends Fragment implements AppReceiver {
-
     private NoteAdapter noteAdapter;
     private Context context;
 
@@ -44,17 +42,17 @@ public class OldNotesPageFragment extends Fragment implements AppReceiver {
         RecyclerView listView = view.findViewById(R.id.listView);
         context = getContext();
         noteAdapter = new NoteAdapter(NotesCache.getInstance().getHistoryNotesList(), getContext(),
-                new OnItemClickListener() {
-                    @Override
-                    public void onMenuClick(Note item) {
-                        showBottomSheetOldDialog(item);
-                    }
+            new OnItemClickListener() {
+                @Override
+                public void onMenuClick(Note item) {
+                    showBottomSheetOldDialog(item);
+                }
 
-                    @Override
-                    public void onEmojiClick(Note item, TextView textView) {
-                        // do nothing
-                    }
-                });
+                @Override
+                public void onEmojiClick(Note item, TextView textView) {
+                    // do nothing
+                }
+            });
         listView.setAdapter(noteAdapter);
 
         listView.setLayoutManager(new LinearLayoutManager(context));
@@ -109,5 +107,4 @@ public class OldNotesPageFragment extends Fragment implements AppReceiver {
     public void register() {
         NotesCache.getInstance().registerReceiver(this, Status.DONE);
     }
-
 }

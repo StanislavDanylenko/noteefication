@@ -18,15 +18,10 @@ public final class NoteeficationApplicationConstants {
 
     public static final String TYPE_NOTE = "Type note";
 
-    public static final String NOTES_LIST = "NOTES_LIST";
     public static final String TAB_INDEX = "TAB_INDEX";
 
     public static final String VALUE = "value";
     public static final String COPIED_TO_CLIPBOARD = "Copied to clipboard";
-
-    public static final String EDIT_NOTE = "Edit note";
-    public static final String OK = "OK";
-    public static final String CANCEL = "Cancel";
 
     public static final String[] EMOJI = new String[]{
             "\uD83D\uDE0E",

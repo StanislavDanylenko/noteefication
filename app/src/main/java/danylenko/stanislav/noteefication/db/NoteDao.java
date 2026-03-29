@@ -10,10 +10,8 @@ import java.util.List;
 
 @Dao
 public interface NoteDao {
-
     @Query("SELECT * FROM Note")
     List<Note> getAll();
-
 
     @Query("select last_insert_rowid()")
     int getLastId();
@@ -26,7 +24,6 @@ public interface NoteDao {
 
     @Query("SELECT * FROM Note WHERE status = :status ORDER BY finishDate DESC")
     List<Note> getByStatusOld(String status);
-
 
     @Insert
     long insert(Note note);
@@ -42,5 +39,4 @@ public interface NoteDao {
 
     @Query("DELETE FROM Note")
     void deleteAll();
-
 }

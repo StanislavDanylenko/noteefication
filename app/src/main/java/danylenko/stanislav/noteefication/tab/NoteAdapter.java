@@ -19,7 +19,6 @@ import danylenko.stanislav.noteefication.R;
 import danylenko.stanislav.noteefication.db.Note;
 
 public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder> {
-
     private final List<Note> noteList;
     private final OnItemClickListener listener;
     private final DateFormat dateFormat;

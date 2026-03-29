@@ -1,10 +1,10 @@
 package danylenko.stanislav.noteefication.db;
 
 public enum Status {
+    ACTUAL("actual"),
+    DONE("done");
 
-    ACTUAL("actual"), DONE("done");
-
-    private String value;
+    private final String value;
 
     Status(String value) {
         this.value = value;

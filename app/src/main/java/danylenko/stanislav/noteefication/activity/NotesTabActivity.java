@@ -12,12 +12,10 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
 
-import android.view.View;
 import android.view.WindowManager;
 
 import danylenko.stanislav.noteefication.R;
 import danylenko.stanislav.noteefication.fragment.FragmentsPagerAdapter;
-import danylenko.stanislav.noteefication.util.db.DBActionHandler;
 
 import static danylenko.stanislav.noteefication.constants.NoteeficationApplicationConstants.TAB_INDEX;
 

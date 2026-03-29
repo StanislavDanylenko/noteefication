@@ -36,7 +36,6 @@ import static danylenko.stanislav.noteefication.constants.NoteeficationApplicati
 import static danylenko.stanislav.noteefication.constants.NoteeficationApplicationConstants.VALUE;
 
 public final class NotificationUtils {
-
     private static final Random RANDOM = new Random();
     private static final Paint paint = new Paint();
 

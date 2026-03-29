@@ -15,5 +15,4 @@ public class DeleteReceiver extends BroadcastReceiver {
         int notificationId = intent.getIntExtra(NOTIFICATION_ID, 0);
         DBActionHandler.handleRemoveAction(context, notificationId);
     }
-
 }
